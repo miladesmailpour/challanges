@@ -17,7 +17,7 @@ generateBtn.addEventListener("click", writePassword);
 function criteriaSelector() {
     // list of Criteria to ask
     var questions = [
-        "Please enter the length of the password!\nMust be a number, 8 is a min and 128 max128 .",
+        "Please enter the length of the password!\nMust be a number, 8 char is a min and 128 max .",
         "Do you want Lowercase character in password?",
         "How about the Uppercase?",
         "is there any number in you password?",
