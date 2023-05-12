@@ -102,13 +102,20 @@ $(
         function display() {
             var len = $('.container-lg').children('div').length
             var hours = $('.description')
+            var timeBlock = $('.time-block')
             var index
             load()
 
-            for (var i = 0; i < len; i++) {
-                index = hours.eq(i)
-                if (workDayScheduler[i] != null) {
-                    index.text(Object.values(workDayScheduler[i]))
+            if (workDayScheduler.length >= 0) {
+                for (var i = 0; i < workDayScheduler.length; i++) {
+
+                    for (var j = 0; j < len; j++) {
+                        index = hours.eq(j)
+                        var id = timeBlock.eq(j).attr('id')
+                        if (id == Object.keys(workDayScheduler[i])) {
+                            index.text(Object.values(workDayScheduler[i]))
+                        }
+                    }
                 }
             }
         }
