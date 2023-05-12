@@ -74,7 +74,7 @@ $(
 
         // change the display the timeline base on the time
         function timeLine() {
-            var time = today.format('h')
+            var time = parseInt(today.format('h'))
             var len = $('.container-lg').children('div').length
             var hours = $('.container-lg').children('div')
             var index
@@ -83,6 +83,7 @@ $(
                 index = hours.eq(i).attr('id')
                 hourContainer = hours.eq(i)
                 var t = parseInt(index.slice(4))
+                console.log(time)
 
                 if (t < time) {
                     hourContainer.attr('class', 'row time-block past')
