@@ -8,15 +8,11 @@ $(
         var saveBtn = $('.saveBtn')
         var workDayScheduler = []
         var today = dayjs();
-        currentDay.text(today.format("dddd, MMMM d") + "th")
+
         load()
         timeLine()
+        display()
         saveBtn.on('click', saveHandler)
-
-        // workDayScheduler.push({ 'hour-10': 'test1' })
-        // // console.log(workDayScheduler)
-        // save(workDayScheduler)
-
 
 
         // TODO: Add a listener for click events on the save button. This code should
@@ -25,6 +21,7 @@ $(
         // function? How can DOM traversal be used to get the "hour-x" id of the
         // time-block containing the button that was clicked? How might the id be
         // useful when saving the description in local storage?
+
         //svae data to localStorage
         function save(data) {
             var store = JSON.stringify(data)
@@ -64,13 +61,13 @@ $(
             save(workDayScheduler)
         }
 
-
         // TODO: Add code to apply the past, present, or future class to each time
         // block by comparing the id to the current hour. HINTS: How can the id
         // attribute of each time-block be used to conditionally add or remove the
         // past, present, and future classes? How can Day.js be used to get the
         // current hour in 24-hour time?
 
+        // change the display the timeline base on the time
         function timeLine() {
             var time = today.format('h')
             var len = $('.container-lg').children('div').length
@@ -92,12 +89,28 @@ $(
             }
         }
 
-
         // TODO: Add code to get any user input that was saved in localStorage and set
         // the values of the corresponding textarea elements. HINT: How can the id
         // attribute of each time-block be used to do this?
+
         //
+        function display() {
+            var len = $('.container-lg').children('div').length
+            var hours = $('.description')
+            var index
+            load()
+
+            for (var i = 0; i < len; i++) {
+                index = hours.eq(i)
+                if (workDayScheduler[i] != null) {
+                    index.text(Object.values(workDayScheduler[i]))
+                }
+            }
+        }
+
         // TODO: Add code to display the current date in the header of the page.
+
+        currentDay.text(today.format("dddd, MMMM d") + "th")
     }
 );
 
