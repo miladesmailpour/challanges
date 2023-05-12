@@ -44,6 +44,11 @@ $(
             var timeKey = parentEl.attr('id')
             var timeNote = parentEl.children('textarea').val()
             var flag = true
+
+            if (timeNote.trim().length <= 0) {
+                alert('Empty notes won\'t save!')
+                return
+            }
             load()
             if (workDayScheduler.length > 0) {
                 for (var i = 0; i < workDayScheduler.length; i++) {
@@ -93,7 +98,7 @@ $(
         // the values of the corresponding textarea elements. HINT: How can the id
         // attribute of each time-block be used to do this?
 
-        //
+        // display the notes
         function display() {
             var len = $('.container-lg').children('div').length
             var hours = $('.description')
@@ -109,7 +114,6 @@ $(
         }
 
         // TODO: Add code to display the current date in the header of the page.
-
         currentDay.text(today.format("dddd, MMMM d") + "th")
     }
 );
