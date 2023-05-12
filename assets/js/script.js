@@ -10,6 +10,7 @@ $(
         var today = dayjs();
         currentDay.text(today.format("dddd, MMMM d") + "th")
         load()
+        timeLine()
         saveBtn.on('click', saveHandler)
 
         // workDayScheduler.push({ 'hour-10': 'test1' })
@@ -70,7 +71,26 @@ $(
         // past, present, and future classes? How can Day.js be used to get the
         // current hour in 24-hour time?
 
+        function timeLine() {
+            var time = today.format('h')
+            var len = $('.container-lg').children('div').length
+            var hours = $('.container-lg').children('div')
+            var index
 
+            for (var i = 0; i < len; i++) {
+                index = hours.eq(i).attr('id')
+                hourContainer = hours.eq(i)
+                var t = parseInt(index.slice(4))
+
+                if (t < time) {
+                    hourContainer.attr('class', 'row time-block past')
+                } else if (t > time) {
+                    hourContainer.attr('class', 'row time-block future')
+                } else {
+                    hourContainer.attr('class', 'row time-block present')
+                }
+            }
+        }
 
 
         // TODO: Add code to get any user input that was saved in localStorage and set
