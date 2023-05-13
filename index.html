@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" type="text/css" href="./assets/css/reset.css"> -->
     <link rel="stylesheet" type="text/css" href="./assets/css/style.css">
     <title>Weather Dashboard</title>
 </head>
@@ -16,22 +17,89 @@
     <main class="box">
         <article id="search" class="box">
             <section id="search-bar" class="box">
-                <h2>search bar</h2>
+                <label for="user_input">
+                    <h2>Search by City name</h2>
+                </label>
+                <input id="user_input" placeholder="Enter a City">
             </section>
+            <button id="history-btn"> Histery</button>
             <section id="search-history" class="box">
-                <h2>search history</h2>
+                <h2>Search history</h2>
+                <ul class="box">
+                    <li class="box">
+                        <a href="#">Toronto</a>
+                    </li>
+                </ul>
             </section>
         </article>
         <article id="display" class="box">
             <section id="display-current" class="box">
-                <h2>display today</h2>
+                <div id="city-info">
+                    <h2>City Name </h2>
+                    <h2>dd/mm/yyy current date </h2>
+                    <img src="./assets/">
+                </div>
+                <div id="weather-info">
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
             </section>
+            <h3>5-Day Forecast</h3>
             <section id="display-next5" class="box">
-                <h2 class="box display-next-day">display next 5 days</h2>
-                <h2 class="box display-next-day">display next 5 days</h2>
-                <h2 class="box display-next-day">display next 5 days</h2>
-                <h2 class="box display-next-day">display next 5 days</h2>
-                <h2 class="box display-next-day">display next 5 days</h2>
+                <div id="weather-info">
+                    <h2>dd/mm/yyy</h2>
+                    <img src="./assets/"><br>
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
+                <div id="weather-info">
+                    <h2>dd/mm/yyy</h2>
+                    <img src="./assets/"><br>
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
+                <div id="weather-info">
+                    <h2>dd/mm/yyy</h2>
+                    <img src="./assets/"><br>
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
+                <div id="weather-info">
+                    <h2>dd/mm/yyy</h2>
+                    <img src="./assets/"><br>
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
+                <div id="weather-info">
+                    <h2>dd/mm/yyy</h2>
+                    <img src="./assets/"><br>
+                    <h4>Temp: </h4>
+                    <h4>72.05 &#x2109;</h4><br>
+                    <h4>Wind: </h4>
+                    <h4>10.57 MPH</h4><br>
+                    <h4>Humidity: </h4>
+                    <h4>60 %</h4>
+                </div>
             </section>
         </article>
     </main>
