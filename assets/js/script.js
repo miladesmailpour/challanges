@@ -1,31 +1,62 @@
 console.log('I\'m in')
 
-var API_KEY = '46e7e576f7714418de08fb8d32cdfc56'
+var API_KEY = '&appid=995a84ed458b98a3593eb1da174d8edf'
+var FORECAST_URL = 'https://api.openweathermap.org/data/2.5/forecast?q='
+var STORE_NAME = 'cities'
+var REQUEST_URL
 
 var btn = document.getElementById('history-btn')
 var c = document.getElementById('search-history')
 var userInput = document.getElementById('user-input')
-var STORE_NAME = 'cities'
-var city = 'Fort Erie1'
-var cities = []
 
-console.log(typeof cities, cities)
+var cities = []
+var forecast = {}
+
 load()
-console.log(typeof cities, cities)
+
 btn.addEventListener('click', function () {
-    btn.setAttribute("style", 'display: none;')
-    c.setAttribute('style', 'display:block')
-    cities.unshift(userInput.value)
-    console.log()
-    save(cities)
-    console.log(typeof cities, cities)
+    // btn.setAttribute("style", 'display: none;')
+    // c.setAttribute('style', 'display:block')
+    // cities.unshift(userInput.value)
+    REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
+    console.log(REQUEST_URL)
+    getData(REQUEST_URL)
+    console.log(save(userInput.value))
+
 })
 
 
+
+function getData(endPoint) {
+    fetch(endPoint)
+        .then(function (response) {
+            if (response.status != 200) {
+                console.error('No data recived from Open Weather API.')
+                return
+            } else {
+                return response.json()
+            }
+        })
+        .then(function (data) {
+            console.log(data.list[0])
+        })
+}
+
 //svae data to localStorage
 function save(data) {
-    var store = JSON.stringify(data)
-    localStorage.setItem(STORE_NAME, store)
+    var store
+    if (!data) {
+        return data
+    }
+    load()
+    if (!cities.includes(data.toUpperCase())) {
+        cities.unshift((userInput.value).toUpperCase())
+        store = JSON.stringify(cities)
+        localStorage.setItem(STORE_NAME, store)
+    } else {
+        return data
+    }
+
 }
 // retrieve data from localStorage
 function load() {
