@@ -61,6 +61,8 @@ ul {
     text-align: center;
 }
 
+
+
 #display-next5 div {
     text-align: left;
     /* flex: 0 0 135px; */
@@ -76,6 +78,17 @@ ul {
 
 .display-next-day {
     flex: 0 0 150px;
+}
+
+/* .weather-info h4 {
+    display: inline-block;
+} */
+
+.weather-info {
+    border: 1px solid burlywood;
+    padding: 10px;
+    margin: 5px;
+    text-align: center;
 }
 
 @media screen and (max-width: 768px) {

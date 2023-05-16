@@ -11,6 +11,7 @@ var c = document.getElementById('search-history')
 var userInput = document.getElementById('user-input')
 var cityInfo = document.getElementById('city-info').children
 var weatherInfo = document.getElementById('weather-info').children
+var next5 = document.getElementById('display-next5')
 
 var cities = []
 var forecast = []
@@ -115,11 +116,28 @@ function display(city, info) {
     cityInfo[1].textContent = TODAY
     cityInfo[2].setAttribute("src", info[0][5])
     console.log(weatherInfo)
-    weatherInfo[1].textContent = info[0][1]
+    weatherInfo[1].textContent = info[0][1] + ' ºF'
     weatherInfo[4].textContent = info[0][2] + ' MPH'
     weatherInfo[7].textContent = info[0][3] + ' %'
     for (var i = 1; i < info.length; i++) {
-        var info = info[0]
+        var h4Eldate = document.createElement("h4");
+        var h4ElTemp = document.createElement("h4");
+        var h4ElTWind = document.createElement("h4");
+        var h4ElHumidite = document.createElement("h4");
+        var imgEl = document.createElement("img");
+        var divEl = document.createElement("div");
+        var brEl = document.createElement("br");
+        h4Eldate.textContent = info[i][0]
+        h4ElTemp.textContent = 'Temp: ' + info[i][1] + ' ºF'
+        h4ElTWind.textContent = 'Wind: ' + info[i][2] + ' MPH'
+        h4ElHumidite.textContent = 'Humidity: ' + info[i][3] + ' %'
+        imgEl.setAttribute("alt", info[i][4])
+        imgEl.setAttribute("src", info[i][5])
+
+
+        divEl.setAttribute('class', 'weather-info')
+        divEl.append(h4Eldate, brEl, imgEl, brEl, h4ElTemp, brEl, h4ElTWind, brEl, h4ElHumidite)
+        next5.append(divEl)
 
     }
 
