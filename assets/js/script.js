@@ -5,21 +5,23 @@ var FORECAST_URL = 'https://api.openweathermap.org/data/2.5/forecast?q='
 var STORE_NAME = 'cities'
 var REQUEST_URL
 var ICON_URL = 'https://openweathermap.org/img/w/'
-
+var TODAY = dayjs().format('DD/MM/YYYY')
 var btn = document.getElementById('history-btn')
 var c = document.getElementById('search-history')
 var userInput = document.getElementById('user-input')
+var cityInfo = document.getElementById('city-info').children
+var weatherInfo = document.getElementById('weather-info').children
 
 var cities = []
 var forecast = []
-var dayInfo = {
-    date: '',
-    temp: 0,
-    wind: 0,
-    humidity: 0,
-    img: '',
-    imgDesc: ''
-}
+var dayInfo = []//{
+//     date: '',
+//     temp: 0,
+//     wind: 0,
+//     humidity: 0,
+//     img: '',
+//     imgDesc: ''
+// }
 
 load()
 
@@ -29,9 +31,8 @@ btn.addEventListener('click', function () {
     save(userInput.value)
     REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
     getData(REQUEST_URL)
-    // setIcon()
-    // dataCollector()
-    // saveForecast('forecast')
+    var weatherInfo = JSON.parse((localStorage.getItem('weatherInfo')))
+    display(userInput.value, weatherInfo)
 })
 
 
@@ -96,13 +97,12 @@ function setIcon() {
     localStorage.setItem('weatherInfo', JSON.stringify(weatherInfo))
     console.log(data)
     for (var i = 0; i < data.length; i++) {
-        dayInfo.date = (data[i].dt_txt).slice(0, 11)
-        console.log((data[i].dt_txt).slice(0, 11), dayInfo.date)
-        dayInfo.temp = data[i].main.temp
-        dayInfo.wind = data[i].wind.speed
-        dayInfo.humidity = data[i].main.humidity
-        dayInfo.imgDesc = data[i].weather[0].description
-        dayInfo.img = ICON_URL + data[i].weather[0].icon + '.png'
+        dayInfo[0] = (data[i].dt_txt).slice(0, 11)
+        dayInfo[1] = data[i].main.temp
+        dayInfo[2] = data[i].wind.speed
+        dayInfo[3] = data[i].main.humidity
+        dayInfo[4] = data[i].weather[0].description
+        dayInfo[5] = ICON_URL + data[i].weather[0].icon + '.png'
         weatherInfo = JSON.parse(localStorage.getItem('weatherInfo'))
         if (weatherInfo)
             weatherInfo.push(dayInfo)
@@ -110,4 +110,17 @@ function setIcon() {
     }
 }
 
+function display(city, info) {
+    cityInfo[0].textContent = city.toUpperCase() + ' '
+    cityInfo[1].textContent = TODAY
+    cityInfo[2].setAttribute("src", info[0][5])
+    console.log(weatherInfo)
+    weatherInfo[1].textContent = info[0][1]
+    weatherInfo[4].textContent = info[0][2] + ' MPH'
+    weatherInfo[7].textContent = info[0][3] + ' %'
+    for (var i = 1; i < info.length; i++) {
+        var info = info[0]
 
+    }
+
+}
