@@ -4,6 +4,7 @@ var API_KEY = '&appid=995a84ed458b98a3593eb1da174d8edf'
 var FORECAST_URL = 'https://api.openweathermap.org/data/2.5/forecast?q='
 var STORE_NAME = 'cities'
 var REQUEST_URL
+var ICON_URL = 'https://openweathermap.org/img/w/'
 
 var btn = document.getElementById('history-btn')
 var c = document.getElementById('search-history')
@@ -28,7 +29,8 @@ btn.addEventListener('click', function () {
     save(userInput.value)
     REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
     getData(REQUEST_URL)
-    dataCollector()
+    // setIcon()
+    // dataCollector()
     // saveForecast('forecast')
 })
 
@@ -44,11 +46,10 @@ function getData(endPoint) {
                 return response.json()
             }
         })
-        .then(function (dat) {
-            var data = dat.list
+        .then(function (bulk) {
+            var data = bulk.list
             var day = 99
             var tmp
-            console.log(data)
             for (var i = 0; i < data.length; i++) {
                 tmp = (data[i].dt_txt).slice(8, 11)
                 if (day != tmp) {
@@ -56,10 +57,11 @@ function getData(endPoint) {
                     day = tmp
                 }
             }
-            saveForecast('forecast')
+            localStorage.setItem('forecast', JSON.stringify(forecast))
+            setIcon()
         })
 }
-//svae data to localStorage
+//save data to localStorage
 function save(data) {
     var store
     if (!data) {
@@ -75,10 +77,6 @@ function save(data) {
     }
 
 }
-//svae forcast to localStorage
-function saveForecast(store) {
-    localStorage.setItem(store, JSON.stringify(forecast))
-}
 // retrieve data from localStorage
 function load() {
     var store = localStorage.getItem(STORE_NAME)
@@ -91,33 +89,25 @@ function load() {
     }
 }
 // collecting the required data for elements
-function dataCollector() {
+// set the Icon for the forecast in to weatherInfo localstorage
+function setIcon() {
+    var weatherInfo = []
+    data = JSON.parse(localStorage.getItem('forecast'))
+    localStorage.setItem('weatherInfo', JSON.stringify(weatherInfo))
     console.log(data)
     for (var i = 0; i < data.length; i++) {
-        tmp = (data[i].dt_txt).slice(8, 11)
-        if (day != tmp) {
-            console.log(tmp, data[i])
-            // dayInfo.date = (data[i].dt_txt).slice(0, 11)
-            // dayInfo.temp = data[i].main.temp
-            // dayInfo.wind = data[i].wind.speed
-            // dayInfo.humidity = data[i].main.humidity
-            // dayInfo.imgDesc = data[i].weather[0].description
-            // dayInfo.img = data[i].weather[0].icon
-            forecast.push(data[i])
-            day = tmp
-        }
-    }
-    saveForecast('forecast')
-    console.log(forecast)
-    setIcon()
-
-}
-// set the Icon for the forecast
-function setIcon() {
-    forecast = JSON.parse(localStorage.getItem('forecast'))
-    for (var i = 0; i < forecast.length; i++) {
-        console.log('tmp', forecast[i])
-
+        dayInfo.date = (data[i].dt_txt).slice(0, 11)
+        console.log((data[i].dt_txt).slice(0, 11), dayInfo.date)
+        dayInfo.temp = data[i].main.temp
+        dayInfo.wind = data[i].wind.speed
+        dayInfo.humidity = data[i].main.humidity
+        dayInfo.imgDesc = data[i].weather[0].description
+        dayInfo.img = ICON_URL + data[i].weather[0].icon + '.png'
+        weatherInfo = JSON.parse(localStorage.getItem('weatherInfo'))
+        if (weatherInfo)
+            weatherInfo.push(dayInfo)
+        localStorage.setItem('weatherInfo', JSON.stringify(weatherInfo))
     }
 }
+
 
