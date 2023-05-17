@@ -1,4 +1,4 @@
-# challanges
+# https://miladesmailpour.github.io/challenges/
 ![Alt text](./assets/images/Screenshot.png "Weather Dashboard")
 
 # 06 Server-Side APIs: Weather Dashboard
