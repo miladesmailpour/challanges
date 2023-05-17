@@ -11,7 +11,7 @@
 </head>
 
 <body>
-    <header class="box">
+    <header>
         <h1> Weather Dashboard </h1>
     </header>
     <main class="box">
@@ -22,9 +22,9 @@
                 </label>
                 <input id="user-input" placeholder="Enter a City">
             </section>
-            <button id="history-btn"> Histery</button>
+            <button id="history-btn">Search History</button>
             <section id="search-history" class="box">
-                <h2>Search history</h2>
+                <h2>Search History</h2>
                 <ul class="box">
                     <li class="box">
                         <a href="#">Toronto</a>
@@ -51,7 +51,7 @@
                     <h4> %</h4>
                 </div>
             </section>
-            <h3>5-Day Forecast</h3>
+            <h3 id="forcast-title">5-Day Forecast</h3>
             <section id="display-next5" class="box">
                 <div class="'weather-info">
                     <h4></h4>
@@ -91,7 +91,7 @@
             </section>
         </article>
     </main>
-    <footer class="box"></footer>
+    <footer></footer>
 
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
         integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U=" crossorigin="anonymous"></script>

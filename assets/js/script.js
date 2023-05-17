@@ -7,7 +7,7 @@ var REQUEST_URL
 var ICON_URL = 'https://openweathermap.org/img/w/'
 var TODAY = dayjs().format('DD/MM/YYYY')
 var btn = document.getElementById('history-btn')
-var cHistoryContainer = document.getElementById('search-history')
+var historyContainer = document.getElementById('search-history')
 var userInput = document.getElementById('user-input')
 var cityInfo = document.getElementById('city-info').children
 var weatherInfo = document.getElementById('weather-info').children
@@ -19,8 +19,15 @@ var dayInfo = []
 load()
 
 btn.addEventListener('click', function () {
-    btn.setAttribute("style", 'display: none;')
-    HistoryContainer.setAttribute('style', 'display:block')
+
+
+    var displayStatus = historyContainer.style.display
+    if (displayStatus == 'block') {
+        historyContainer.setAttribute('style', 'display:none')
+    }
+    else {
+        historyContainer.setAttribute('style', 'display:block')
+    }
 })
 
 userInput.addEventListener("keyup", function (event) {
