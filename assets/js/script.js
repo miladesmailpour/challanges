@@ -18,7 +18,7 @@ var forecast = []
 var dayInfo = []
 
 load()
-
+cityInfo[1].textContent = TODAY
 btn.addEventListener('click', function (event) {
     event.preventDefault();
     var displayStatus = historyContainer.style.display
@@ -46,15 +46,17 @@ userInput.addEventListener("keyup", function (event) {
     event.preventDefault();
 
     if (event.code === 'Enter') {
-        save(userInput.value)
-        // document.location.reload();
-        REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
-        getData(REQUEST_URL)
-        var info = JSON.parse((localStorage.getItem('weatherInfo')))
+        if (userInput.value) {
+            save(userInput.value)
+            // document.location.reload();
+            REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
+            getData(REQUEST_URL)
+            var info = JSON.parse((localStorage.getItem('weatherInfo')))
 
-        // console.log(info)
-        display(userInput.value, info)
-
+            // console.log(info)
+            display(userInput.value, info)
+        }
+        alert('please enter the city you want to look at its weather')
     }
 })
 
@@ -64,6 +66,7 @@ function getData(endPoint) {
         .then(function (response) {
             if (response.status != 200) {
                 console.error('No data recived from Open Weather API.')
+                alert('NO data founded for your input!')
                 return
             } else {
                 return response.json()
