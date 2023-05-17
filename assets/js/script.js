@@ -18,9 +18,8 @@ var dayInfo = []
 
 load()
 
-btn.addEventListener('click', function () {
-
-
+btn.addEventListener('click', function (event) {
+    event.preventDefault();
     var displayStatus = historyContainer.style.display
     if (displayStatus == 'block') {
         historyContainer.setAttribute('style', 'display:none')
@@ -30,15 +29,23 @@ btn.addEventListener('click', function () {
     }
 })
 
+historyContainer.addEventListener("keyup", function (event) {
+    event.preventDefault();
+    console.log(event)
+})
 userInput.addEventListener("keyup", function (event) {
+    event.preventDefault();
+
     if (event.code === 'Enter') {
         save(userInput.value)
+        // document.location.reload();
         REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
         getData(REQUEST_URL)
         var info = JSON.parse((localStorage.getItem('weatherInfo')))
 
         // console.log(info)
         display(userInput.value, info)
+
     }
 })
 
