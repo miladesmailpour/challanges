@@ -94,6 +94,10 @@ function load() {
     } else {
         cities = JSON.parse(store)
     }
+    var history = JSON.parse(localStorage.getItem('cities'))
+    if (history) {
+        displayHistory(history)
+    }
 }
 // collecting the required data for elements
 // set the Icon for the forecast in to weatherInfo localstorage
@@ -138,4 +142,16 @@ function display(city, info) {
         next5.children[i - 1].children[3].textContent = 'Wind: ' + info[i][2] + ' MPH'
         next5.children[i - 1].children[4].textContent = 'Humidity: ' + info[i][3] + ' %'
     }
+}
+
+function displayHistory(history) {
+    console.log(history)
+    for (var i = 0; i < history.length; i++) {
+        var btn = document.createElement('button')
+        btn.setAttribute('class', 'link-btn')
+        btn.textContent = history[i].toUpperCase()
+        historyContainer.append(btn)
+
+    }
+
 }
