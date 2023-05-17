@@ -1,5 +1,3 @@
-console.log('I\'m in')
-
 var API_KEY = '&appid=995a84ed458b98a3593eb1da174d8edf'
 var FORECAST_URL = 'https://api.openweathermap.org/data/2.5/forecast?q='
 var STORE_NAME = 'cities'
@@ -17,8 +15,11 @@ var cities = []
 var forecast = []
 var dayInfo = []
 
+// loading the page and initail data
 load()
 cityInfo[1].textContent = TODAY
+
+// Handle the display the history in diffrent screen size
 btn.addEventListener('click', function (event) {
     event.preventDefault();
     var displayStatus = historyContainer.style.display
@@ -30,6 +31,7 @@ btn.addEventListener('click', function (event) {
     }
 })
 
+// Handleing the and search for weather based on search history
 historyContainer.addEventListener("click", function (event) {
     event.preventDefault();
     el = event.target
@@ -42,6 +44,7 @@ historyContainer.addEventListener("click", function (event) {
     }
 })
 
+// Handleing the and search for weather based on user input
 userInput.addEventListener("keyup", function (event) {
     event.preventDefault();
 
@@ -52,8 +55,6 @@ userInput.addEventListener("keyup", function (event) {
             REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
             getData(REQUEST_URL)
             var info = JSON.parse((localStorage.getItem('weatherInfo')))
-
-            // console.log(info)
             display(userInput.value, info)
         }
         alert('please enter the city you want to look at its weather')
@@ -87,6 +88,7 @@ function getData(endPoint) {
             setIcon()
         })
 }
+
 //save data to localStorage
 function save(data) {
     var store
@@ -103,6 +105,7 @@ function save(data) {
     }
 
 }
+
 // retrieve data from localStorage
 function load() {
     var store = localStorage.getItem(STORE_NAME)
@@ -118,6 +121,7 @@ function load() {
         displayHistory(history)
     }
 }
+
 // collecting the required data for elements
 // set the Icon for the forecast in to weatherInfo localstorage
 function setIcon() {
@@ -144,6 +148,7 @@ function setIcon() {
     forecast = []
 }
 
+// display weather info on page// display weather info on page
 function display(city, info) {
     cityInfo[0].textContent = city.toUpperCase() + ' '
     cityInfo[1].textContent = TODAY
@@ -163,6 +168,7 @@ function display(city, info) {
     }
 }
 
+// display search history on page
 function displayHistory(history) {
     console.log(history)
     for (var i = 0; i < history.length; i++) {
