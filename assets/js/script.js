@@ -12,6 +12,7 @@ var userInput = document.getElementById('user-input')
 var cityInfo = document.getElementById('city-info').children
 var weatherInfo = document.getElementById('weather-info').children
 var next5 = document.getElementById('display-next5')
+var linkBtn = document.getElementById('link-btn')
 var cities = []
 var forecast = []
 var dayInfo = []
@@ -29,10 +30,18 @@ btn.addEventListener('click', function (event) {
     }
 })
 
-historyContainer.addEventListener("keyup", function (event) {
+historyContainer.addEventListener("click", function (event) {
     event.preventDefault();
-    console.log(event)
+    el = event.target
+    if (el.getAttribute('class') === 'link-btn') {
+
+        REQUEST_URL = FORECAST_URL + el.textContent.trim() + API_KEY
+        getData(REQUEST_URL)
+        var info = JSON.parse((localStorage.getItem('weatherInfo')))
+        display(el.textContent, info)
+    }
 })
+
 userInput.addEventListener("keyup", function (event) {
     event.preventDefault();
 

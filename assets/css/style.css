@@ -116,6 +116,9 @@ ul {
     text-align: center;
 }
 
+.link-btn-h {
+    display: none;
+}
 
 .link-btn {
     background-color: #00afb9;
