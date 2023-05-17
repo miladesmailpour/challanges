@@ -56,8 +56,9 @@ userInput.addEventListener("keyup", function (event) {
             getData(REQUEST_URL)
             var info = JSON.parse((localStorage.getItem('weatherInfo')))
             display(userInput.value, info)
+        } else {
+            alert('please enter the city you want to look at its weather')
         }
-        alert('please enter the city you want to look at its weather')
     }
 })
 
