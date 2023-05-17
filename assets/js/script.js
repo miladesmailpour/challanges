@@ -12,17 +12,9 @@ var userInput = document.getElementById('user-input')
 var cityInfo = document.getElementById('city-info').children
 var weatherInfo = document.getElementById('weather-info').children
 var next5 = document.getElementById('display-next5')
-
 var cities = []
 var forecast = []
-var dayInfo = []//{
-//     date: '',
-//     temp: 0,
-//     wind: 0,
-//     humidity: 0,
-//     img: '',
-//     imgDesc: ''
-// }
+var dayInfo = []
 
 load()
 
@@ -36,8 +28,10 @@ userInput.addEventListener("keyup", function (event) {
         save(userInput.value)
         REQUEST_URL = FORECAST_URL + userInput.value.trim() + API_KEY
         getData(REQUEST_URL)
-        var weatherInfo = JSON.parse((localStorage.getItem('weatherInfo')))
-        display(userInput.value, weatherInfo)
+        var info = JSON.parse((localStorage.getItem('weatherInfo')))
+
+        // console.log(info)
+        display(userInput.value, info)
     }
 })
 
@@ -97,10 +91,12 @@ function load() {
 // collecting the required data for elements
 // set the Icon for the forecast in to weatherInfo localstorage
 function setIcon() {
-    var weatherInfo = []
+    var info = []
     data = JSON.parse(localStorage.getItem('forecast'))
-    localStorage.setItem('weatherInfo', JSON.stringify(weatherInfo))
-    console.log(data)
+    localStorage.removeItem('weatherInfo')
+
+    localStorage.setItem('weatherInfo', JSON.stringify(info))
+
     for (var i = 0; i < data.length; i++) {
         dayInfo[0] = (data[i].dt_txt).slice(0, 11)
         dayInfo[1] = data[i].main.temp
@@ -108,43 +104,31 @@ function setIcon() {
         dayInfo[3] = data[i].main.humidity
         dayInfo[4] = data[i].weather[0].description
         dayInfo[5] = ICON_URL + data[i].weather[0].icon + '.png'
-        weatherInfo = JSON.parse(localStorage.getItem('weatherInfo'))
-        if (weatherInfo)
-            weatherInfo.push(dayInfo)
-        localStorage.setItem('weatherInfo', JSON.stringify(weatherInfo))
+        info = JSON.parse(localStorage.getItem('weatherInfo'))
+        if (info) {
+            info.unshift(dayInfo)
+        }
+        localStorage.setItem('weatherInfo', JSON.stringify(info))
     }
+    localStorage.removeItem('forecast')
+    forecast = []
 }
 
 function display(city, info) {
     cityInfo[0].textContent = city.toUpperCase() + ' '
     cityInfo[1].textContent = TODAY
-    if (info) {
-        cityInfo[2].setAttribute("src", info[0][5])
-        console.log(weatherInfo)
-        weatherInfo[1].textContent = info[0][1] + ' ºF'
-        weatherInfo[4].textContent = info[0][2] + ' MPH'
-        weatherInfo[7].textContent = info[0][3] + ' %'
-        for (var i = 1; i < info.length; i++) {
-            var h4Eldate = document.createElement("h4");
-            var h4ElTemp = document.createElement("h4");
-            var h4ElTWind = document.createElement("h4");
-            var h4ElHumidite = document.createElement("h4");
-            var imgEl = document.createElement("img");
-            var divEl = document.createElement("div");
-            var brEl = document.createElement("br");
-            h4Eldate.textContent = info[i][0]
-            h4ElTemp.textContent = 'Temp: ' + info[i][1] + ' ºF'
-            h4ElTWind.textContent = 'Wind: ' + info[i][2] + ' MPH'
-            h4ElHumidite.textContent = 'Humidity: ' + info[i][3] + ' %'
-            imgEl.setAttribute("alt", info[i][4])
-            imgEl.setAttribute("src", info[i][5])
+    cityInfo[2].setAttribute("src", info[0][5])
+    weatherInfo[1].textContent = info[0][1] + ' ºF'
+    weatherInfo[4].textContent = info[0][2] + ' MPH'
+    weatherInfo[7].textContent = info[0][3] + ' %'
 
-
-            divEl.setAttribute('class', 'weather-info')
-            divEl.append(h4Eldate, brEl, imgEl, brEl, h4ElTemp, brEl, h4ElTWind, brEl, h4ElHumidite)
-            next5.append(divEl)
-
-        }
+    console.log(next5.children[0])
+    for (var i = 1; i < info.length; i++) {
+        next5.children[i - 1].children[0].textContent = info[i][0]
+        next5.children[i - 1].children[1].setAttribute("alt", info[i][4])
+        next5.children[i - 1].children[1].setAttribute('src', info[i][5])
+        next5.children[i - 1].children[2].textContent = 'Temp: ' + info[i][1] + ' ºF'
+        next5.children[i - 1].children[3].textContent = 'Wind: ' + info[i][2] + ' MPH'
+        next5.children[i - 1].children[4].textContent = 'Humidity: ' + info[i][3] + ' %'
     }
-
 }

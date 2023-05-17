@@ -5,9 +5,12 @@
     padding: 10px;
     margin: 5px;
     text-align: center;
+    box-shadow: 2px 1px 1px seagreen;
 }
 
-:root {}
+body {
+    background-color: beige;
+}
 
 
 #history-btn {
@@ -93,7 +96,7 @@ ul {
 
 @media screen and (max-width: 768px) {
     body {
-        background-color: black;
+        background-color: blanchedalmond;
     }
 
     main {
