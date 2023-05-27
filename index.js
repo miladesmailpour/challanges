@@ -1,6 +1,7 @@
 // TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown.js')
 
 // TODO: Create an array of questions for user input
 const questions = [{ title: 'What is the project title?' },
@@ -17,7 +18,7 @@ const questions = [{ title: 'What is the project title?' },
 { githubID: 'Please enter your GitHub username:' },
 { email: 'Please enter your email:' }]
 
-// turning question to the inquirer question
+// Turning the array of questions to the array of inquirer object question
 const inquirerObjMacker = (questions) => {
     let obj = {}
     return questions.map((question) => {
@@ -39,13 +40,11 @@ const inquirerObjMacker = (questions) => {
         return obj
     })
 }
-// using inquirer to ask questions and return object with user answers
+// Using inquirer to ask questions and return object with user answers
 async function inquirerQuestioner(questions) {
-    // console.log(questions)
     const answers = await inquirer
         .prompt(questions)
         .then((response) => {
-            // console.log(response)
             return response
         }
         );
@@ -53,57 +52,21 @@ async function inquirerQuestioner(questions) {
 }
 // TODO: Create a function to write README file
 function writeToFile(fileName, data) {
-    console.log(data)
+    // console.log(data)
     fs.writeFile(fileName, data, (err) =>
         err ? console.error(err) : console.log('Success!'))
 }
 
 // TODO: Create a function to initialize app
 async function init() {
+    // const gm = new Gm()
     const inquirerArrObj = inquirerObjMacker(questions)
     const answers = await inquirerQuestioner(inquirerArrObj)
-    // console.log(answers)
-    const readme = readMeMaker(answers)
+    // place the userinput to the template to make readme
+    const readme = generateMarkdown(answers)
     writeToFile('./README.md', readme)
-    // fs.writeFile('./ReadMe.md', JSON.stringify(answers), (err) =>
-    //     err ? console.error(err) : console.log('Success!'))
 }
-// place the userinput to the template 
-function readMeMaker(data) {
-    let readMe = `# ${data.title}\n
-## Description\n
-- ${data.desc_1 ? data.desc_1 + '\n' : ''}
-- ${data.desc_2 ? data.desc_2 + '\n' : ''}
-- ${data.desc_3 ? data.desc_3 + '\n' : ''}
-- ${data.desc_4 ? data.desc_4 + '\n' : ''}
-## Table of Contents
-${data.installation ? '- [Installation](#installation)\n' : ''}
-${data.screenShot ? '- [Usage](#usage)\n' : ''}
-${data.collaborator ? '- [Credits](#credits)\n' : ''}
-${data.license ? '- [License](#license)\n' : ''}
-## Installation\n
-${data.installation ? data.installation : ''}\n
-## Usage\n
-${data.deployLink ? `[Deploy link](${data.deployLink})` + '\n' : ''}
-${data.screenShot ? `![Screenshot](./assets/images/${data.screenShot})` + '\n' : ''}
-## Credits\n
-${data.collaborator ? data.collaborator + '\n' : ''}
-## License\n
-${data.license ? data.license + '\n' : ''}
----
-## Badges\n
-![badmath](https://img.shields.io/github/languages/top/lernantino/badmath)
-## Tests\n
-${data.test ? data.test + '\n' : ''}
-## Questions\n
-please contact for more information via\n
-[GitHub](https://github.com/${data.githubID})
-or
-${data.email} 
-`;
-    // console.log(readMe)
-    return readMe
-}
+
 // Function call to initialize app
 init();
 
