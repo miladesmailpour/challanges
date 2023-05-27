@@ -1,7 +1,7 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-
+  return `https://img.shields.io/static/v1?label=${license[1]}&message=100%&color=green`
 }
 
 // TODO: Create a function that returns the license link
@@ -15,10 +15,12 @@ function renderLicenseLink(license) {
   { boost: 'https://choosealicense.com/licenses/bsl-1.0/' },
   { unlicense: 'https://choosealicense.com/licenses/unlicense/' }]
   const licenseUrl = licenseLinks.filter((link) => {
-    if (lowerCaseLicense.includes(Object.keys(link)))
+    if (lowerCaseLicense.includes(Object.keys(link))) {
       return link
+    }
   })
-  return Object.values(licenseUrl)
+  licenseUrl.push(license)
+  return licenseUrl
 }
 
 // TODO: Create a function that returns the license section of README
@@ -28,6 +30,7 @@ function renderLicenseSection(license) { }
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
   const licenseLink = renderLicenseLink(data.license)
+  const badge = renderLicenseBadge(licenseLink)
   let readMe = `# ${data.title}\n
   ## Description\n
   - ${data.desc_1 ? data.desc_1 + '\n' : ''}
@@ -50,7 +53,7 @@ function generateMarkdown(data) {
   ${data.license ? `[${data.license}](${Object.values(licenseLink[0])})` + '\n' : ''}
   ---
   ## Badges\n
-  ![${data.license}](https://img.shields.io/github/languages/top/lernantino/badmath)
+  ![${data.license}](${badge})
   ## Tests\n
   ${data.test ? data.test + '\n' : ''}
   ## Questions\n
