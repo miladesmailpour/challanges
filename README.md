@@ -25,7 +25,7 @@ node install && node index.js
 ## Usage
 
 
-![alt text](../assets/images/screenshot.png)
+![Screenshot](./assets/images/screenshot.png)
 
 ## Credits
 

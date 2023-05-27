@@ -85,7 +85,7 @@ ${data.license ? '- [License](#license)\n' : ''}
 ${data.installation ? data.installation : ''}\n
 ## Usage\n
 ${data.deployLink ? `[Deploy link](${data.deployLink})` + '\n' : ''}
-${data.screenShot ? `![alt text](../assets/images/${data.screenShot})` + '\n' : ''}
+${data.screenShot ? `![Screenshot](./assets/images/${data.screenShot})` + '\n' : ''}
 ## Credits\n
 ${data.collaborator ? data.collaborator + '\n' : ''}
 ## License\n
