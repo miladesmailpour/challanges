@@ -1,7 +1,8 @@
 // TODO: Create a function that returns a license badge based on which license is passed in
 // If there is no license, return an empty string
 function renderLicenseBadge(license) {
-  return `https://img.shields.io/static/v1?label=${license[1]}&message=100%&color=green`
+  const licenseLable = license.replace(' ', '-')
+  return `https://img.shields.io/static/v1?label=${licenseLable}&message=100%&color=green`
 }
 
 // TODO: Create a function that returns the license link
@@ -27,7 +28,7 @@ function renderLicenseLink(license) {
 // If there is no license, return an empty string
 function renderLicenseSection(license) {
   const licenseLink = renderLicenseLink(license)
-  const badge = renderLicenseBadge(licenseLink)
+  const badge = renderLicenseBadge(license)
   return `## License\n
   ${licenseLink[1] ? `[${licenseLink[1]}](${Object.values(licenseLink[0])})` + '\n' : ''}
   ---
@@ -37,8 +38,6 @@ function renderLicenseSection(license) {
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  // const licenseLink = renderLicenseLink(data.license)
-  // const badge = renderLicenseBadge(licenseLink)
   let readMe = `# ${data.title}\n
   ## Description\n
   - ${data.desc_1 ? data.desc_1 + '\n' : ''}
@@ -66,7 +65,7 @@ function generateMarkdown(data) {
   or
   ${data.email} 
   `;
-  console.log(readMe)
+  // console.log(readMe)
   return readMe
 }
 

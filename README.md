@@ -32,7 +32,7 @@ node install && node index.js
 
   ## Credits
 
-  it was an individual project
+  it was an individual project by mahdi Esmaeelpour
 
   ## License
 
@@ -41,7 +41,7 @@ node install && node index.js
   ---
   ## Badges
 
-  ![MIT License](https://img.shields.io/static/v1?label=MIT License&message=100%&color=green)
+  ![MIT License](https://img.shields.io/static/v1?label=MIT-License&message=100%&color=green)
   ## Tests
 
   unit test NOT use in this project, it will add later
