@@ -21,7 +21,9 @@
 
   ## Installation
 
-  ```node install && node index.js```
+  ```
+node install && node index.js
+```
 
   ## Usage
 
@@ -30,7 +32,7 @@
 
   ## Credits
 
-  it was an individual project"
+  it was an individual project
 
   ## License
 

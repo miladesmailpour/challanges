@@ -51,7 +51,7 @@ function generateMarkdown(data) {
   ${data.collaborator ? '- [Credits](#credits)\n' : ''}
   ${data.license ? '- [License](#license)\n' : ''}
   ## Installation\n
-  ${data.installation ? '```' + data.installation + '```' : ''}\n
+  ${data.installation ? '```\n' + data.installation + '\n```' : ''}\n
   ## Usage\n
   ${data.deployLink ? `[Deploy link](${data.deployLink})` + '\n' : ''}
   ${data.screenShot ? `![Screenshot](./assets/images/${data.screenShot})` + '\n' : ''}
