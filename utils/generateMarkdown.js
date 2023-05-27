@@ -25,12 +25,20 @@ function renderLicenseLink(license) {
 
 // TODO: Create a function that returns the license section of README
 // If there is no license, return an empty string
-function renderLicenseSection(license) { }
+function renderLicenseSection(license) {
+  const licenseLink = renderLicenseLink(license)
+  const badge = renderLicenseBadge(licenseLink)
+  return `## License\n
+  ${licenseLink[1] ? `[${licenseLink[1]}](${Object.values(licenseLink[0])})` + '\n' : ''}
+  ---
+  ## Badges\n
+  ![${licenseLink[1]}](${badge})`
+}
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  const licenseLink = renderLicenseLink(data.license)
-  const badge = renderLicenseBadge(licenseLink)
+  // const licenseLink = renderLicenseLink(data.license)
+  // const badge = renderLicenseBadge(licenseLink)
   let readMe = `# ${data.title}\n
   ## Description\n
   - ${data.desc_1 ? data.desc_1 + '\n' : ''}
@@ -49,11 +57,7 @@ function generateMarkdown(data) {
   ${data.screenShot ? `![Screenshot](./assets/images/${data.screenShot})` + '\n' : ''}
   ## Credits\n
   ${data.collaborator ? data.collaborator + '\n' : ''}
-  ## License\n
-  ${data.license ? `[${data.license}](${Object.values(licenseLink[0])})` + '\n' : ''}
-  ---
-  ## Badges\n
-  ![${data.license}](${badge})
+  ${renderLicenseSection(data.license)}
   ## Tests\n
   ${data.test ? data.test + '\n' : ''}
   ## Questions\n
