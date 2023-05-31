@@ -7,8 +7,7 @@ https://drive.google.com/drive/folders/15pYxHoI2g0ibWSkIABCGYbZzXAQc-iz-?usp=sha
 ## Table of Contents
 - [Installation](#installation)
 - [Acceptance_Criteria](#acceptance_criteria)
-- [Helpful](#helpful)
-- [License](#license)
+- [Helpful](#helpful-svg-resources)
 
 ## Installation
 
