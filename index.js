@@ -1,6 +1,5 @@
 const Circle = require('./lib/Circle.js')
 const Rectangle = require('./lib/Rectangle.js')
-const Shape = require('./lib/Shape.js')
 const Q = require('./lib/Questioner.js')
 const SVGW = require('./lib/SVGWriter.js')
 const DV = require('./lib/DataValidation.js')
@@ -22,6 +21,8 @@ const svgMaker = (userInput) => {
         return rectangle.render()
     }
     if (shape === 'Triangle') {
+        const triangle = new Triangle({ fillColor: userInput.color, text: userInput.text, textColor: userInput.textColor })
+        return triangle.render()
     }
 
 }
