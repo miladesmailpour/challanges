@@ -1,9 +1,8 @@
 const Circle = require('../lib/Circle.js')
-const Shape = require('../lib/Circle.js')
 
 // All require test for Circle class
 describe('Circle', () => {
-    // Test to verify the instantiation the Shape class
+    // Test to verify the instantiation the Circle class
     describe('Instantiation', () => {
         it('Should be the instance of Circle class', () => {
             const circle = new Circle()

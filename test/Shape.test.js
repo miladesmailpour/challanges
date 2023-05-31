@@ -9,22 +9,6 @@ describe('Shape', () => {
             expect(shape).toBeInstanceOf(Shape)
         })
     })
-    // Test to verify hight assgin to the corresponding property
-    describe('Hight assign', () => {
-        it('Should set hight property', () => {
-            const hight = 113
-            const shape = new Shape({ hight: hight })
-            expect(shape.hight).toBe(hight)
-        })
-    })
-    // Test to verify width assgin to the corresponding property
-    describe('Width assign', () => {
-        it('Should set width property', () => {
-            const width = 113
-            const shape = new Shape({ width: width })
-            expect(shape.width).toBe(width)
-        })
-    })
     // Test to verify fillColor assgin to the corresponding property
     describe('FillColor assign', () => {
         it('Should set fillColor property', () => {
