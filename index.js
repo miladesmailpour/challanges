@@ -1,28 +1,30 @@
 const Circle = require('./lib/Circle.js')
 const Rectangle = require('./lib/Rectangle.js')
 const Shape = require('./lib/Shape.js')
+const Q = require('./lib/Questioner.js')
+// const inquirer = require('inquirer')
 
-const init = () => {
-    const shape = new Shape({
-        hight: 13,
-        fillColor: 'red',
-        strokeColor: 'red',
-        strokeWidth: 13
-    })
-    const circle = new Circle({
-        fillColor: 'red',
-        strokeColor: 'black',
-        strokeWidth: 13,
-        redius: 113
-    })
-    const rectangle = new Rectangle({
-        hight: 150,
-        width: 150,
-        cornerRedius: 15,
-        fillColor: 'red',
-        strokeColor: 'black',
-        strokeWidth: 13,
-    })
-    console.log(rectangle, rectangle.render())
+const avialabeShapes = ['Circle', 'Rectangle', 'Triangle']
+const shapeQuestions = [{ text: 'Please enter up to 3 character for your LOGO:' },
+{ textColor: 'Please pick a color for your text: (black or FFF000)' },
+{ selectedShape: 'What is the shape you willing to use in your LOGO?' },
+{ color: 'Please enter a valid color or a hexadecimal number for your shape (black or FFF000)' },]
+
+const svgMaker = (shape) => {
+    if (shape === 'Circle') {
+        const circle = new Circle()
+    }
+    if (shape === 'Rectangle') {
+        const obj = svgMaker(c.selectedShape)
+    }
+    if (shape === 'Triangle') {
+        const obj = svgMaker(c.selectedShape)
+    }
+
+}
+
+const init = async () => {
+    const userInput = await Q.inquirerQuestioner(shapeQuestions, avialabeShapes)
+    const obj = svgMaker(c.selectedShape)
 }
 init()

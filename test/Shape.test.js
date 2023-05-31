@@ -17,20 +17,20 @@ describe('Shape', () => {
             expect(shape.fillColor).toBe(fillColor)
         })
     })
-    // Test to verify strokeColor assgin to the corresponding property
+    // Test to verify text assgin to the corresponding property
     describe('StrokeColor assign', () => {
         it('Should set strokeColor property', () => {
-            const strokeColor = 'blue'
-            const shape = new Shape({ strokeColor: strokeColor })
-            expect(shape.strokeColor).toBe(strokeColor)
+            const text = 'AAA'
+            const shape = new Shape({ text: text })
+            expect(shape.text).toBe(text)
         })
     })
     // Test to verify strokeWidth assgin to the corresponding property
     describe('StrokeWidth assign', () => {
         it('Should set strokeWidth property', () => {
-            const strokeWidth = 13
-            const shape = new Shape({ strokeWidth: strokeWidth })
-            expect(shape.strokeWidth).toBe(strokeWidth)
+            const textColor = 'blue'
+            const shape = new Shape({ textColor: textColor })
+            expect(shape.textColor).toBe(textColor)
         })
     })
     // Test throw Exception for render method
