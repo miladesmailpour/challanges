@@ -31,7 +31,22 @@ describe('Circle', () => {
         it('Should set cy property', () => {
             const cy = 113
             const circle = new Circle({ cy: cy })
-            cy
+            expect(circle.cy).toBe(cy)
+        })
+    })
+    // Test the render() for corresponding return value
+    describe('Render method', () => {
+        it('Should return a string representing svg circle', () => {
+            const svgCircle = '<circle cx="150" cy="150" r="113" stroke="black" fill="red" stroke-width="13"/>'
+            const circle = new Circle({
+                hight: 13,
+                width: 13,
+                fillColor: 'red',
+                strokeColor: 'black',
+                strokeWidth: 13,
+                redius: 113
+            })
+            expect(circle.render()).toBe(svgCircle)
         })
     })
 

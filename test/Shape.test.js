@@ -49,4 +49,12 @@ describe('Shape', () => {
             expect(shape.strokeWidth).toBe(strokeWidth)
         })
     })
+    // Test throw Exception for render method
+    describe('Render method trow exception', () => {
+        it('should throw an error when render() call from Shape', () => {
+            const shape = new Shape()
+            // const err = new Error('This method requires to override in extended class(child)')
+            expect(shape.render).toThrowError(Error)
+        })
+    })
 })
