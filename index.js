@@ -3,7 +3,7 @@ const Rectangle = require('./lib/Rectangle.js')
 const Shape = require('./lib/Shape.js')
 const Q = require('./lib/Questioner.js')
 const SVGW = require('./lib/SVGWriter.js')
-// const inquirer = require('inquirer')
+const DV = require('./lib/DataValidation.js')
 
 const avialabeShapes = ['Circle', 'Rectangle', 'Triangle']
 const shapeQuestions = [{ text: 'Please enter up to 3 character for your LOGO:' },
@@ -28,7 +28,12 @@ const svgMaker = (userInput) => {
 
 const init = async () => {
     const userInput = await Q.inquirerQuestioner(shapeQuestions, avialabeShapes)
+    const validatedData = DV.dataValidation(userInput)
+    if (validatedData) {
+        SVGW.SVGWriter(userInput.selectedShape, svgMaker(userInput))
+    } else {
+        console.log('Text or one of the Colors are not in acceptable format! Please try again.')
+    }
 
-    SVGW.SVGWriter(userInput.selectedShape, svgMaker(userInput))
 }
 init()

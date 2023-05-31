@@ -1,0 +1,56 @@
+const Rectangle = require('../lib/Rectangle.js')
+
+// All require test for Rectangle class
+describe('Rectangle', () => {
+    // Test to verify the instantiation the Rectangle class
+    describe('Instantiation', () => {
+        it('Should be the instance of Rectangle class', () => {
+            const rectangle = new Rectangle()
+            expect(rectangle).toBeInstanceOf(Rectangle)
+        })
+    })
+    // Test to verify hight assgin to the corresponding property
+    describe('Height assign', () => {
+        it('Should set height property', () => {
+            const height = 113
+            const rectangle = new Rectangle({ height: height })
+            expect(rectangle.height).toBe(height)
+        })
+    })
+    // Test to verify width assgin to the corresponding property
+    describe('Width assign', () => {
+        it('Should set width property', () => {
+            const width = 113
+            const rectangle = new Rectangle({ width: width })
+            expect(rectangle.width).toBe(width)
+        })
+    })
+    // Test to verify cornerRedius assgin to the corresponding property
+    describe('Width assign', () => {
+        it('Should set width property', () => {
+            const cornerRedius = 5
+            const rectangle = new Rectangle({ cornerRedius: cornerRedius })
+            expect(rectangle.cornerRedius).toBe(cornerRedius)
+        })
+    })
+    // Test the render() for corresponding return value
+    describe('Render method', () => {
+        it('Should return a string representing svg rectangle', () => {
+            const svgCircle = `<?xml version="1.0" standalone="no"?>\n` +
+                `<svg width="300" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">\n` +
+                `<rect x="75" y="75" rx="15" ry="15" width="150" height="150" fill="red"/>\n` +
+                `<text x="150" y="170" fill="black" text-anchor="middle" font-size="65" >AAA</text>\n` +
+                `</svg>`
+
+            const rectangle = new Rectangle({
+                hight: 150,
+                width: 150,
+                cornerRedius: 15,
+                fillColor: 'red',
+                text: 'AAA',
+                textColor: 'black',
+            })
+            expect(rectangle.render()).toBe(svgCircle)
+        })
+    })
+})

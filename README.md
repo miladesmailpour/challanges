@@ -1,3 +1,6 @@
+![Alt text](./assets/images/screenshot.png "Screenshot")
+
+
 # 10 Object-oriented Programming: SVG Logo Maker
 
 ## Your Task
