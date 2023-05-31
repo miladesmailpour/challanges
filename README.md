@@ -1,19 +1,32 @@
 # SVG Logo Maker
-![Alt text](./assets/images/screenshot.png "Screenshot")
-Link to the walkthrough video and sample (Google drive) 
-```md
-https://drive.google.com/drive/folders/15pYxHoI2g0ibWSkIABCGYbZzXAQc-iz-?usp=sharing
-```
+## Description
+
+  - watching the developer struggling in LOGO design
+
+  - Helping people who want to make SVG Logo by answering a few questions
+
+  - Make logo design fast and easy
+
+  - OOP, inquirer library, using the file system, async/await and more
+
 ## Table of Contents
 - [Installation](#installation)
-- [Acceptance_Criteria](#acceptance_criteria)
-- [Helpful](#helpful-svg-resources)
+- [How To Use](#how-to-use)
+- [Acceptance_Criteria](#acceptance-criteria)
+- [Helpful SVG Resources](#helpful-svg-resources)
 
 ## Installation
 
 ```
 node install && node index.js
 ```
+
+
+## How To Use
+Link to the walkthrough video and sample (![Google drive](https://drive.google.com/drive/folders/15pYxHoI2g0ibWSkIABCGYbZzXAQc-iz-?usp=sharing)) 
+![Alt text](./assets/images/screenshot.png "Screenshot")
+
+
 ### User Story
 
 ```md
@@ -22,7 +35,7 @@ I WANT to generate a simple logo for my projects
 SO THAT I don't have to pay a graphic designer
 ```
 
-## Acceptance_Criteria
+## Acceptance Criteria
 
 ```md
 GIVEN a command-line application that accepts user input
