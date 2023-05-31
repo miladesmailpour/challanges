@@ -10,13 +10,29 @@ describe('Circle', () => {
             expect(circle).toBeInstanceOf(Circle)
         })
     })
-    // // Test to verify hight assgin to the corresponding property
-    // describe('Hight assign', () => {
-    //     it('Should set hight property', () => {
-    //         const hight = 113
-    //         const shape = new Shape({ hight: hight })
-    //         expect(shape.hight).toBe(hight)
-    //     })
-    // })
+    // Test to verify reduis assgin to the corresponding property
+    describe('Redius assign', () => {
+        it('Should set redius property', () => {
+            const redius = 113
+            const circle = new Circle({ redius: redius })
+            expect(circle.redius).toBe(redius)
+        })
+    })
+    // Test to verify cx assgin to the corresponding property
+    describe('CX assign', () => {
+        it('Should set redius property', () => {
+            const cx = 113
+            const circle = new Circle({ cx: cx })
+            expect(circle.cx).toBe(cx)
+        })
+    })
+    // Test to verify cy assgin to the corresponding property
+    describe('CY assign', () => {
+        it('Should set cy property', () => {
+            const cy = 113
+            const circle = new Circle({ cy: cy })
+            cy
+        })
+    })
 
 })
