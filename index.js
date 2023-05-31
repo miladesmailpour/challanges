@@ -13,10 +13,10 @@ const init = () => {
         hight: 13,
         width: 13,
         fillColor: 'red',
-        strokeColor: 'red',
+        strokeColor: 'black',
         strokeWidth: 13,
         redius: 113
     })
-    console.log(shape, circle)
+    console.log(shape, circle, circle.render())
 }
 init()

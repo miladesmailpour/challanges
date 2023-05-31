@@ -1,5 +1,5 @@
 <?xml version="1.0" standalone="no"?>
-<svg width="200" height="250" version="1.1" xmlns="http://www.w3.org/2000/svg">
+<svg width="300" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">
 <!-- 
   <rect x="10" y="10" width="30" height="30" stroke="black" fill="blue" stroke-width="5"/> -->
   <!-- <rect x="60" y="10" rx="10" ry="10" width="30" height="30" stroke="black" fill="transparent" stroke-width="5"/>
@@ -15,5 +15,5 @@
       stroke="green" fill="blue" stroke-width="5"/>
 
   <path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5"/> -->
-<text x="10" y="10">Hello World!</text>
+<circle cx="150" cy="150" r="113" stroke="black" fill="red" stroke-width="13"/>
 </svg>
