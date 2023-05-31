@@ -36,14 +36,19 @@ describe('Rectangle', () => {
     // Test the render() for corresponding return value
     describe('Render method', () => {
         it('Should return a string representing svg rectangle', () => {
-            const svgCircle = '<rect x="75" y="125" rx="15" ry="15" width="150" height="50" fill="red"/>'
+            const svgCircle = `<?xml version="1.0" standalone="no"?>\n` +
+                `<svg width="300" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">\n` +
+                `<rect x="75" y="75" rx="15" ry="15" width="150" height="150" fill="red"/>\n` +
+                `<text x="150" y="170" fill="black" text-anchor="middle" font-size="65" >AAA</text>\n` +
+                `</svg>`
+
             const rectangle = new Rectangle({
                 hight: 150,
                 width: 150,
                 cornerRedius: 15,
+                fillColor: 'red',
                 text: 'AAA',
                 textColor: 'black',
-                fillColor: 'red',
             })
             expect(rectangle.render()).toBe(svgCircle)
         })

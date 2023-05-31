@@ -2,6 +2,7 @@ const Circle = require('./lib/Circle.js')
 const Rectangle = require('./lib/Rectangle.js')
 const Shape = require('./lib/Shape.js')
 const Q = require('./lib/Questioner.js')
+const SVGW = require('./lib/SVGWriter.js')
 // const inquirer = require('inquirer')
 
 const avialabeShapes = ['Circle', 'Rectangle', 'Triangle']
@@ -10,21 +11,24 @@ const shapeQuestions = [{ text: 'Please enter up to 3 character for your LOGO:' 
 { selectedShape: 'What is the shape you willing to use in your LOGO?' },
 { color: 'Please enter a valid color or a hexadecimal number for your shape (black or FFF000)' },]
 
-const svgMaker = (shape) => {
+const svgMaker = (userInput) => {
+    const shape = userInput.selectedShape
     if (shape === 'Circle') {
-        const circle = new Circle()
+        const circle = new Circle({ fillColor: userInput.color, text: userInput.text, textColor: userInput.textColor })
+        return circle.render()
     }
     if (shape === 'Rectangle') {
-        const obj = svgMaker(c.selectedShape)
+        const rectangle = new Rectangle({ fillColor: userInput.color, text: userInput.text, textColor: userInput.textColor })
+        return rectangle.render()
     }
     if (shape === 'Triangle') {
-        const obj = svgMaker(c.selectedShape)
     }
 
 }
 
 const init = async () => {
     const userInput = await Q.inquirerQuestioner(shapeQuestions, avialabeShapes)
-    const obj = svgMaker(c.selectedShape)
+
+    SVGW.SVGWriter(userInput.selectedShape, svgMaker(userInput))
 }
 init()

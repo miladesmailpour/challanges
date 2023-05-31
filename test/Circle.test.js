@@ -36,7 +36,11 @@ describe('Circle', () => {
     // Test the render() for corresponding return value
     describe('Render method', () => {
         it('Should return a string representing svg circle', () => {
-            const svgCircle = '<circle cx="150" cy="150" r="113" fill="red"/>'
+            const svgCircle = `<?xml version="1.0" standalone="no"?>\n` +
+                `<svg width="300" height="300" version="1.1" xmlns="http://www.w3.org/2000/svg">\n` +
+                '<circle cx="150" cy="150" r="113" fill="red"/>\n' +
+                `<text x="150" y="170" fill="black" text-anchor="middle" font-size="70" >AAA</text>\n` +
+                `</svg>`
             const circle = new Circle({
                 fillColor: 'red',
                 text: 'AAA',
