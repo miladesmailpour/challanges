@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "title": "Shopping",
+        "text": "supplier for washing machine",
+        "note_id": "e478"
+    },
+    {
+        "title": "Fixing the main door",
+        "text": "lifting up the door and replacing the loose screws",
+        "note_id": "8192"
+    }
+]
