@@ -20,7 +20,7 @@
 
 ## How To Use
 
-Link to deployed web page on (![Heroku](https://drive.google.com/drive/folders/15pYxHoI2g0ibWSkIABCGYbZzXAQc-iz-?usp=sharing))
+Link to deployed web page on ([Heroku](https://morning-fortress-95302.herokuapp.com/))
 ![Alt text](./public/assets/images/screenshot1.png "Screenshot")
 ![Alt text](./public/assets/images/screenshot2.png "Screenshot")
 
