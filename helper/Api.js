@@ -39,6 +39,17 @@ const Api = async (userInput) => {
       });
       break;
     case 3:
+      // fetching the user input and add to role table
+      const shouldUpdate = await Inquirer.inquirerQuestioner(
+        [
+          { userID: "Please enter the employee id:" },
+          { roleID: "Please enter the new role id:" },
+        ],
+        false
+      );
+      update("http://localhost:3001/api/employee/" + shouldUpdate.userID, {
+        role_id: shouldUpdate.roleID,
+      });
       break;
     case 4:
       result = await viewAll("http://localhost:3001/api/role/");
@@ -87,6 +98,7 @@ const Api = async (userInput) => {
       });
       break;
     default:
+      break;
   }
 };
 module.exports = Api;
@@ -110,6 +122,19 @@ const addToDB = async (url, data) => {
   //   console.log(data);
   return fetch(url, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((response) => console.log(response))
+    .catch((err) => {});
+};
+const update = async (url, data) => {
+  //   console.log(data);
+  return fetch(url, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
