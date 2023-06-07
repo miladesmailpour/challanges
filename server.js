@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql2");
+const api = require("./routes/index.js");
 
 const PORT = process.env.PORT || 3001;
 const app = express();
@@ -7,20 +7,7 @@ const app = express();
 // Express middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-
-// Connect to database
-const db = mysql.createConnection(
-  {
-    host: "localhost",
-    // MySQL username,
-    user: "root",
-    // TODO: Add MySQL password here
-    password: "mysql",
-    database: "employee_tracker_db",
-  },
-  console.log(`Connected to the employee_tracker_db database.`)
-);
-
+app.use("/api", api);
 
 // Default response for any other request (Not Found)
 app.use((req, res) => {
