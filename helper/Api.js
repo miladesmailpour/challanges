@@ -21,6 +21,22 @@ const Api = async (userInput) => {
       }
       break;
     case 2:
+      // fetching the user input and add to role table
+      const employee = await Inquirer.inquirerQuestioner(
+        [
+          { first_name: "Please enter the first name:" },
+          { last_name: "Please enter the last name:" },
+          { role_id: "Please enter the role id" },
+          { manager_id: "Please enter the manager id" },
+        ],
+        false
+      );
+      addToDB("http://localhost:3001/api/employee/", {
+        first_name: employee.first_name,
+        last_name: employee.last_name,
+        role_id: employee.role_id,
+        manager_id: employee.manager_id,
+      });
       break;
     case 3:
       break;
@@ -91,7 +107,7 @@ const getAll = async (url) => {
     .catch((err) => {});
 };
 const addToDB = async (url, data) => {
-  console.log(data);
+  //   console.log(data);
   return fetch(url, {
     method: "POST",
     headers: {
