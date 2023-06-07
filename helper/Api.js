@@ -1,3 +1,5 @@
+const Inquirer = require("../helper/Inquirer");
+
 const Api = async (userInput) => {
   const choice = parseInt(userInput[0].slice(0, 1));
   let result = [];
@@ -13,7 +15,7 @@ const Api = async (userInput) => {
         `--\t----------\t----------\t----------\t----------\t--------\t--------------------`
       );
       for (let i = 0; i < result.length; i++) {
-        console.table(
+        console.log(
           `${result[i].id}\t${result[i].first_name}\t\t${result[i].last_name}\t${result[i].title}\t${result[i].department}\t\t${result[i].salary}\t\t${result[i].maneger}`
         );
       }
@@ -28,7 +30,7 @@ const Api = async (userInput) => {
       console.log(`id\ttitle\t\tdepartment\tsalary`);
       console.log(`--\t-------------\t----------\t----------`);
       for (let i = 0; i < result.length; i++) {
-        console.table(
+        console.log(
           `${result[i].id}\t${result[i].title}\t${result[i].department}\t\t${result[i].salary}`
         );
       }
@@ -41,10 +43,18 @@ const Api = async (userInput) => {
       console.log(`id\tdepartment`);
       console.log(`--\t-------------`);
       for (let i = 0; i < result.length; i++) {
-        console.table(`${result[i].id}\t${result[i].Department}`);
+        console.log(`${result[i].id}\t${result[i].department}`);
       }
       break;
     case 7:
+      // fetching the user input
+      const userInput = await Inquirer.inquirerQuestioner(
+        [{ menu: "Please enter the Department name:" }],
+        false
+      );
+      addRole("http://localhost:3001/api/department/", {
+        department_name: userInput.menu,
+      });
       break;
     default:
   }
@@ -64,5 +74,18 @@ const getAll = async (url) => {
     .then((data) => {
       return data;
     })
+    .catch((err) => {});
+};
+const addRole = async (url, data) => {
+  console.log(data);
+  return fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((response) => console.log(response))
     .catch((err) => {});
 };

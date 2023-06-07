@@ -3,9 +3,10 @@ const db = require("../config/connection.js");
 
 // Create a department
 department.post("/", ({ body }, res) => {
+  // console.log("body");
   const sql = `INSERT INTO department (name)
     VALUES (?)`;
-  const params = [body.department_name];
+  const params = [body.name];
 
   db.query(sql, params, (err, result) => {
     if (err) {

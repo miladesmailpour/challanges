@@ -14,17 +14,19 @@ const menuChoices = [
 
 const init = async () => {
   let flag = true;
-  while (flag) {
-    // fetching the user input
-    const userInput = await Inquirer.inquirerQuestioner(
-      [{ menu: "Please select from the menu:" }],
-      true,
-      menuChoices
-    );
-    // console.log(userInput);
-    if (userInput.menu === "Exit") return;
-    const returnApi = Api(Object.values(userInput));
-    // console.log(returnApi);
-  }
+  //   while (flag) {
+  // console.clear();
+  // fetching the user input
+  const userInput = await Inquirer.inquirerQuestioner(
+    [{ menu: "Please select from the menu:" }],
+    true,
+    menuChoices
+  );
+  // console.log(userInput);
+  if (userInput.menu === "Exit") return;
+  Api(Object.values(userInput));
+  // console.log(returnApi);
 };
+// };
+
 init();
