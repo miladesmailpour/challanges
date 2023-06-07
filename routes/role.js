@@ -45,13 +45,13 @@ role.delete("/:id", (req, res) => {
       res.statusMessage(400).json({ error: res.message });
     } else if (!result.affectedRows) {
       res.json({
-        message: "department not found",
+        message: "role not found",
       });
     } else {
       res.json({
         message: "deleted",
         changes: result.affectedRows,
-        name: req.params.name,
+        id: req.params.id,
       });
     }
   });

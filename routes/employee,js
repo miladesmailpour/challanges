@@ -1,11 +1,16 @@
-const department = require("express").Router();
+const employee = require("express").Router();
 const db = require("../config/connection.js");
 
-// Create a department
-department.post("/", ({ body }, res) => {
-  const sql = `INSERT INTO department (name)
-    VALUES (?)`;
-  const params = [body.department_name];
+// Create a employee
+employee.post("/", ({ body }, res) => {
+  const sql = `INSERT INTO employee (first_name, last_name, role_id, manager_id)
+    VALUES (?, ?, ?, ?)`;
+  const params = [
+    body.first_name,
+    body.last_name,
+    body.role_id,
+    body.manager_id,
+  ];
 
   db.query(sql, params, (err, result) => {
     if (err) {
@@ -19,9 +24,13 @@ department.post("/", ({ body }, res) => {
   });
 });
 
-// Read all department
-department.get("/", (req, res) => {
-  const sql = `SELECT id, name AS Department FROM department`;
+// Read all employee
+employee.get("/", (req, res) => {
+  const sql = `SELECT e.first_name, e.last_name, em.last_name, r.title, r.salary, d.name 
+  from employee e 
+  join employee em on e.id = em.manager_id
+  join role r on e.role_id = r.id
+  join department d on d.id = r.department_id`;
 
   db.query(sql, (err, rows) => {
     if (err) {
@@ -35,9 +44,9 @@ department.get("/", (req, res) => {
   });
 });
 
-// Delete a department
-department.delete("/:id", (req, res) => {
-  const sql = `DELETE FROM department WHERE id = ?`;
+// Delete a employee
+employee.delete("/:id", (req, res) => {
+  const sql = `DELETE FROM employee WHERE id = ?`;
   const params = [req.params.id];
 
   db.query(sql, params, (err, result) => {
@@ -51,10 +60,10 @@ department.delete("/:id", (req, res) => {
       res.json({
         message: "deleted",
         changes: result.affectedRows,
-        id: req.params.id,
+        name: req.params.name,
       });
     }
   });
 });
 
-module.exports = department;
+module.exports = role;
