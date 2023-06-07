@@ -26,7 +26,7 @@ employee.post("/", ({ body }, res) => {
 
 // Read all employee
 employee.get("/", (req, res) => {
-  const sql = `select e.id, e.first_name, e.last_name, em.last_name, r.title, r.salary, d.name from employee e 
+  const sql = `select e.id, e.first_name, e.last_name, concat(em.first_name,' ',em.last_name) as maneger, r.title, r.salary, d.name as department from employee e 
   left join employee em on e.id=em.manager_id 
   left join role r on e.role_id=r.id 
   left join department d on r.department_id=d.id;`;

@@ -21,7 +21,7 @@ department.post("/", ({ body }, res) => {
 
 // Read all department
 department.get("/", (req, res) => {
-  const sql = `SELECT id, name AS Department FROM department`;
+  const sql = `SELECT id, name AS department FROM department`;
 
   db.query(sql, (err, rows) => {
     if (err) {

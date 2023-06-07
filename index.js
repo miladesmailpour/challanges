@@ -1,5 +1,5 @@
 const Inquirer = require("./helper/Inquirer");
-const Api = require('./helper/Api');
+const Api = require("./helper/Api");
 
 const menuChoices = [
   "1 View All Employees",
@@ -21,10 +21,10 @@ const init = async () => {
       true,
       menuChoices
     );
-    console.log(userInput);
+    // console.log(userInput);
     if (userInput.menu === "Exit") return;
-    Api(userInput){}
-
+    const returnApi = Api(Object.values(userInput));
+    // console.log(returnApi);
   }
 };
 init();
