@@ -36,6 +36,20 @@ const Api = async (userInput) => {
       }
       break;
     case 5:
+      // fetching the user input and add to role table
+      const role = await Inquirer.inquirerQuestioner(
+        [
+          { title: "Please enter the role title:" },
+          { salary: "Please enter the role salary:" },
+          { d_id: "Please enter the department id" },
+        ],
+        false
+      );
+      addToDB("http://localhost:3001/api/role/", {
+        title: role.title,
+        salary: role.salary,
+        department_id: role.d_id,
+      });
       break;
     case 6:
       result = await viewAll("http://localhost:3001/api/department/");
@@ -47,13 +61,13 @@ const Api = async (userInput) => {
       }
       break;
     case 7:
-      // fetching the user input
-      const userInput = await Inquirer.inquirerQuestioner(
-        [{ menu: "Please enter the Department name:" }],
+      // fetching the user input and add to department table
+      const department = await Inquirer.inquirerQuestioner(
+        [{ name: "Please enter the Department name:" }],
         false
       );
-      addRole("http://localhost:3001/api/department/", {
-        department_name: userInput.menu,
+      addToDB("http://localhost:3001/api/department/", {
+        department_name: department.name,
       });
       break;
     default:
@@ -76,7 +90,7 @@ const getAll = async (url) => {
     })
     .catch((err) => {});
 };
-const addRole = async (url, data) => {
+const addToDB = async (url, data) => {
   console.log(data);
   return fetch(url, {
     method: "POST",
