@@ -1,13 +1,21 @@
-const Inquirer = require("../helper/Inquirer");
+const Inquirer = require("./Inquirer");
+const Menu = require("./Menu");
 
-const Api = async (userInput) => {
+const Api = async () => {
+  let userInput;
+  userInput = await backToMenu();
+  userInput = userInput.join("");
+
+  if (!userInput) {
+    return false;
+  }
   const choice = parseInt(userInput[0].slice(0, 1));
   let result = [];
 
   switch (choice) {
     case 1:
       result = await viewAll("http://localhost:3001/api/employee/");
-      console.log(` `);
+      console.log(`List of Employees`);
       console.log(
         `id\tFirst Name\tLast Name\ttitle\t\tdepartment\tsalary\t\tManeger Name`
       );
@@ -100,6 +108,8 @@ const Api = async (userInput) => {
     default:
       break;
   }
+  console.log(userInput);
+  //   return userInput;
 };
 module.exports = Api;
 
@@ -143,4 +153,11 @@ const update = async (url, data) => {
     .then((response) => response.json())
     .then((response) => console.log(response))
     .catch((err) => {});
+};
+const backToMenu = async () => {
+  console.clear();
+  let userInput = await Menu.call();
+  if (userInput.menu === "Exit") return false;
+
+  return Object.values(userInput);
 };
