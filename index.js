@@ -3,10 +3,11 @@ const Menu = require("./helper/Menu");
 
 const init = async () => {
   let closeApplication = true;
-  while (closeApplication) {
+
+  // while (closeApplication) {
     closeApplication = await Api();
-    // console.log(closeApplication);
-  }
+    // console.log("index - " + closeApplication);
+  // }
   // closeApplication = await Api();
   if (closeApplication) return;
 };

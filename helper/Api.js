@@ -5,6 +5,7 @@ const Api = async () => {
   let userInput;
   userInput = await backToMenu();
   userInput = userInput.join("");
+  console.clear();
 
   if (!userInput) {
     return false;
@@ -14,19 +15,26 @@ const Api = async () => {
 
   switch (choice) {
     case 1:
-      result = await viewAll("http://localhost:3001/api/employee/");
-      console.log(`List of Employees`);
-      console.log(
-        `id\tFirst Name\tLast Name\ttitle\t\tdepartment\tsalary\t\tManeger Name`
-      );
-      console.log(
-        `--\t----------\t----------\t----------\t----------\t--------\t--------------------`
-      );
-      for (let i = 0; i < result.length; i++) {
-        console.log(
-          `${result[i].id}\t${result[i].first_name}\t\t${result[i].last_name}\t${result[i].title}\t${result[i].department}\t\t${result[i].salary}\t\t${result[i].maneger}`
-        );
-      }
+      await viewAll("http://localhost:3001/api/employee/")
+        .then((result) => {
+          //   console.log(result);
+          console.log(`List of Employees`);
+          console.log(
+            `id\tFirst Name\tLast Name\ttitle\t\tdepartment\tsalary\t\tManeger Name`
+          );
+          console.log(
+            `--\t----------\t----------\t----------\t----------\t--------\t--------------------`
+          );
+          for (let i = 0; i < result.length; i++) {
+            console.log(
+              `${result[i].id}\t${result[i].first_name}\t\t${result[i].last_name}\t${result[i].title}\t${result[i].department}\t\t${result[i].salary}\t\t${result[i].maneger}`
+            );
+          }
+        })
+        .then(() => {
+          Api();
+        });
+
       break;
     case 2:
       // fetching the user input and add to role table
@@ -108,8 +116,8 @@ const Api = async () => {
     default:
       break;
   }
-  console.log(userInput);
-  //   return userInput;
+//   console.log("Api - " + userInput);
+  return await userInput;
 };
 module.exports = Api;
 
