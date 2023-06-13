@@ -8,6 +8,7 @@ CREATE TABLE department(
     name varchar(30) NOT NULL,
     PRIMARY KEY (id)
 );
+
 CREATE TABLE role(
     id INT NOT NULL AUTO_INCREMENT,
     title VARCHAR(30) NOT NULL,
@@ -17,6 +18,7 @@ CREATE TABLE role(
     FOREIGN KEY (department_id) REFERENCES department(id)
     ON DELETE SET NULL
 );
+
 CREATE TABLE employee(
     id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL,
