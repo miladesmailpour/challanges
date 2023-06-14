@@ -89,6 +89,13 @@ const menu = (choice) => {
   ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝  ╩ ╩╝╚╝═╩╝  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩╚═╚═╝
   `);
   }
+  if (choice === "viewAllEmpDep") {
+    console.log(`
+  ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗╔═╗  ╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗
+  ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ ╚═╗  ╠═╣║║║ ║║   ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ 
+  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝  ╩ ╩╝╚╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ 
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -107,19 +114,20 @@ const init = () => {
           "7 - Add a Department",
           "8 - Update employee managers",
           "9 - View employees by manager",
-          "10 - Quit",
+          "10 - View employees by department",
+          "11 - Quit",
         ],
-        pageSize: 8,
+        pageSize: 15,
         validate: (answer) => {
           if (answer.length === 0) {
-            return console.log("Select one!");
+            return console.log("Please select from options!");
           }
           return true;
         },
       },
     ])
     .then((userInput) => {
-      switch (parseInt(userInput.choice[0])) {
+      switch (parseInt(userInput.choice.slice(0, 2))) {
         case 1:
           viewAllEmployees();
           break;
@@ -148,6 +156,9 @@ const init = () => {
           viewEmpViaManagers();
           break;
         case 10:
+          viewEmpViaDepartments();
+          break;
+        case 11:
           console.clear();
           console.log("see you soon!");
           break;
@@ -481,11 +492,26 @@ function viewEmpViaManagers() {
   console.clear();
   menu("main");
   db.query(
-    "select em.id, concat(em.first_name, ' ', em.last_name) as manager, concat(e.first_name, ' ', e.last_name) as employee from employee e join employee em ON e.manager_id = em.id;",
+    "select em.id, concat(em.first_name, ' ', em.last_name) as manager, concat(e.first_name, ' ', e.last_name) as employee, r.title from employee e join employee em ON e.manager_id = em.id join role r on e.role_id=r.id;",
     function (err, res) {
       if (err) throw err;
       menu("viewAllEmpMan");
 
+      tableMaker(res);
+      init();
+    }
+  );
+}
+
+// View employees by department
+function viewEmpViaDepartments() {
+  console.clear();
+  menu("main");
+  db.query(
+    "select d.id, d.name, concat(e.first_name, ' ', e.last_name) as employee, r.title from department d join role r on d.id = r.department_id join employee e on r.id=e.role_id;",
+    function (err, res) {
+      if (err) throw err;
+      menu("viewAllEmpDep");
       tableMaker(res);
       init();
     }
