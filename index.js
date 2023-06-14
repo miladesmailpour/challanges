@@ -54,6 +54,13 @@ const menu = (choice) => {
  ╩ ╩═╩╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
   `);
   }
+  if (choice === "addRole") {
+    console.log(`
+              ╔═╗╔╦╗╔╦╗  ╦═╗╔═╗╦  ╔═╗╔═╗
+              ╠═╣ ║║ ║║  ╠╦╝║ ║║  ║╣ ╚═╗
+              ╩ ╩═╩╝═╩╝  ╩╚═╚═╝╩═╝╚═╝╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -96,7 +103,7 @@ const init = () => {
           viewAllRoles();
           break;
         case 5:
-          console.log("5 - Add a Role");
+          addRole();
           break;
         case 6:
           viewAllDepartments();
@@ -185,14 +192,12 @@ const viewAllDepartments = () => {
 };
 
 // Add a Department
-
 const addDepartment = () => {
   console.clear();
-  db.query("SELECT id, name FROM department;", function (err, res) {
+  db.query("select id, name from department;", function (err, res) {
     if (err) throw err;
 
     menu("addDep");
-
     tableMaker(res);
 
     inquirer
@@ -212,7 +217,7 @@ const addDepartment = () => {
       ])
       .then(function (answer) {
         db.query(
-          `INSERT INTO department (name) VALUES ("${answer.newDep}");`,
+          `insert into department (name) values ("${answer.newDep}");`,
           function (err, res) {
             if (err) throw err;
             viewAllDepartments();
@@ -220,4 +225,58 @@ const addDepartment = () => {
         );
       });
   });
+};
+
+// Add role
+const addRole = async () => {
+  console.clear();
+  menu("addRole");
+
+  const departments = await db.query("select * from department;");
+  const choices = departments.map(({ id, name }) => ({
+    name: name,
+    value: id,
+  }));
+
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Please enter a Role",
+        name: "newRole",
+        validate: function (answer) {
+          if (answer.length === 0) {
+            return console.log("title is require for adding a Role!");
+          }
+          return true;
+        },
+      },
+      {
+        type: "number",
+        message: "salary is require for adding a Role!",
+        name: "newSalary",
+        validate: function (answer) {
+          if (answer.length === 0) {
+            return console.log("Write one!");
+          }
+          return true;
+        },
+      },
+      {
+        type: "list",
+        message: "Please Select a department for the Role",
+        name: "department_id",
+        choices: choices,
+        pageSize: 15,
+      },
+    ])
+    .then(function (answer) {
+      db.query(
+        `insert into role(title, salary, department_id) VALUES ("${answer.newRole}", ${answer.newSalary},${answer.department_id});`,
+        function (err, res) {
+          if (err) throw err;
+          viewAllRoles();
+        }
+      );
+    });
 };
