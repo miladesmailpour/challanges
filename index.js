@@ -16,14 +16,23 @@ const db = mysql.createConnection({
 db.query = util.promisify(db.query);
 
 // main menu
-const menu = () => {
-  console.log(`
+const menu = (choice) => {
+  if (choice === "main") {
+    console.log(`
   ███ █   █ ███ █    ██  █   █ ███ ███   █   █  ██  █   █  ██   ██  ███ ████          
   █   ██ ██ █ █ █   █  █ █   █ █   █     ██ ██ █  █ ██  █ █  █ █    █   █  █         
   ██  █ █ █ ███ █   █  █  ███  ██  ██    █ █ █ ████ █ █ █ ████ █    ██  ████          
   █   █   █ █   █   █  █   █   █   █     █   █ █  █ █  ██ █  █ █  █ █   █ █         
   ███ █   █ █   ███  ██    █   ███ ███   █   █ █  █ █   █ █  █  ██  ███ █  █ 
   `);
+  }
+  if (choice === "allEmp") {
+    console.log(`
+                        ╔═╗ ╦  ╦    ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗╔═╗
+                        ╠═╣ ║  ║    ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ ╚═╗
+                        ╩ ╩ ╩═╝╩═╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -105,13 +114,14 @@ const tableMaker = (data) => {
   console.log(result);
 };
 
-menu();
+menu("main");
 init();
 
 // View All Employees
 const viewAllEmployees = () => {
   console.clear();
-  // headerPrinter("allEmp");
+  menu("main");
+  menu("allEmp");
 
   db.query(
     "select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(em.first_name, ' ', em.last_name) as manager from employee e join role r on e.role_id= r.id join department d on r.department_id=d.id join employee em on e.manager_id= em.id;",
