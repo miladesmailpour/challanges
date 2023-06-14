@@ -28,37 +28,45 @@ const menu = (choice) => {
   }
   if (choice === "allEmp") {
     console.log(`
-                        ╔═╗ ╦  ╦    ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗╔═╗
-                        ╠═╣ ║  ║    ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ ╚═╗
-                        ╩ ╩ ╩═╝╩═╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝
+  ╔═╗ ╦  ╦    ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗╔═╗
+  ╠═╣ ║  ║    ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ ╚═╗
+  ╩ ╩ ╩═╝╩═╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝
   `);
   }
   if (choice === "allRole") {
     console.log(`
-                  ╦═╗╔═╗╦  ╔═╗╔═╗
-                  ╠╦╝║ ║║  ║╣ ╚═╗
-                  ╩╚═╚═╝╩═╝╚═╝╚═╝
+  ╦═╗╔═╗╦  ╔═╗╔═╗
+  ╠╦╝║ ║║  ║╣ ╚═╗
+  ╩╚═╚═╝╩═╝╚═╝╚═╝
   `);
   }
   if (choice === "allDep") {
     console.log(`
- ╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
- ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ ╚═╗
- ╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
+  ╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
+  ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ ╚═╗
+  ╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
   `);
   }
   if (choice === "addDep") {
     console.log(`
- ╔═╗╔╦╗╔╦╗  ╔╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
- ╠═╣ ║║ ║║   ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ ╚═╗
- ╩ ╩═╩╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
+  ╔═╗╔╦╗╔╦╗  ╔╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗
+  ╠═╣ ║║ ║║   ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ 
+  ╩ ╩═╩╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ 
   `);
   }
   if (choice === "addRole") {
     console.log(`
-              ╔═╗╔╦╗╔╦╗  ╦═╗╔═╗╦  ╔═╗╔═╗
-              ╠═╣ ║║ ║║  ╠╦╝║ ║║  ║╣ ╚═╗
-              ╩ ╩═╩╝═╩╝  ╩╚═╚═╝╩═╝╚═╝╚═╝
+  ╔═╗╔╦╗╔╦╗  ╦═╗╔═╗╦  ╔═╗
+  ╠═╣ ║║ ║║  ╠╦╝║ ║║  ║╣ 
+  ╩ ╩═╩╝═╩╝  ╩╚═╚═╝╩═╝╚═╝
+  `);
+  }
+  if (choice === "addEmp") {
+    console.log(`
+
+  ╔═╗╔╦╗╔╦╗  ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗
+  ╠═╣ ║║ ║║  ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ 
+  ╩ ╩═╩╝═╩╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝
   `);
   }
 };
@@ -94,7 +102,7 @@ const init = () => {
           viewAllEmployees();
           break;
         case 2:
-          console.log("2 - Add an Employee");
+          addEmployee();
           break;
         case 3:
           console.log("3 - Update employee's Role");
@@ -276,6 +284,75 @@ const addRole = async () => {
         function (err, res) {
           if (err) throw err;
           viewAllRoles();
+        }
+      );
+    });
+};
+
+// Add employee
+const addEmployee = async () => {
+  console.clear();
+  menu("addEmp");
+
+  const roles = await db.query("select * from role;");
+  const choices = roles.map(({ id, title }) => ({
+    name: title,
+    value: id,
+  }));
+  roles.unshift({ name: "None", value: null });
+
+  const manager = await db.query("select * from employee;");
+  const mChoices = manager.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+  mChoices.push({ name: "None", value: null });
+
+  inquirer
+    .prompt([
+      {
+        type: "input",
+        message: "Please enter the first name?",
+        name: "firstName",
+        validate: function (answer) {
+          if (answer.length === 0) {
+            return console.log("first name is require for adding an employee!");
+          }
+          return true;
+        },
+      },
+      {
+        type: "input",
+        message: "Please enter the last name?",
+        name: "lastName",
+        validate: function (answer) {
+          if (answer.length === 0) {
+            return console.log("last name is require for adding an employee!");
+          }
+          return true;
+        },
+      },
+      {
+        type: "list",
+        message: "Please enter a role?",
+        name: "role",
+        choices: choices,
+        pageSize: 15,
+      },
+      {
+        type: "list",
+        message: "Please enter the manager?",
+        name: "manager",
+        choices: mChoices,
+        pageSize: 15,
+      },
+    ])
+    .then(function (answer) {
+      db.query(
+        `insert into employee (first_name, last_name, role_id, manager_id) values ("${answer.firstName}","${answer.lastName}",${answer.role}, ${answer.manager});`,
+        function (err, res) {
+          if (err) throw err;
+          viewAllEmployees();
         }
       );
     });
