@@ -1,10 +1,9 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
-const { Console } = require("console");
 const util = require("util");
+const { Console } = require("console");
 const { Transform } = require("stream");
-const headerPrinter = require("./assets/js/headerPrinter");
-const menuPrinter = require("./assets/js/menuPrinter");
+const { async } = require("rxjs");
 require("dotenv").config();
 
 // database  connection
@@ -16,48 +15,111 @@ const db = mysql.createConnection({
 });
 db.query = util.promisify(db.query);
 
+// main menu
+const menu = () => {
+  console.log(`
+  ███ █   █ ███ █    ██  █   █ ███ ███   █   █  ██  █   █  ██   ██  ███ ████          
+  █   ██ ██ █ █ █   █  █ █   █ █   █     ██ ██ █  █ ██  █ █  █ █    █   █  █         
+  ██  █ █ █ ███ █   █  █  ███  ██  ██    █ █ █ ████ █ █ █ ████ █    ██  ████          
+  █   █   █ █   █   █  █   █   █   █     █   █ █  █ █  ██ █  █ █  █ █   █ █         
+  ███ █   █ █   ███  ██    █   ███ ███   █   █ █  █ █   █ █  █  ██  ███ █  █ 
+  `);
+};
 const init = () => {
-  headerPrinter("logo");
-  switch (menuPrinter("main")) {
-    case "View All Employees":
-      console.log("viewEmployees");
-      break;
-    case "View All Departments":
-      console.log("viewDepartments");
-      break;
-    case "View All Roles":
-      console.log("viewRoles");
-      break;
-    case "View employees by manager":
-      console.log("viewManagers");
-      break;
-    case "View employees by department":
-      console.log("viewEmployDepart");
-      break;
-    case "View annual budget by department":
-      console.log("viewAnnualBudget");
-      break;
-    case "Add a Department":
-      console.log("addDepartment");
-      break;
-    case "Add a Role":
-      console.log("addRole");
-      break;
-    case "Add an Employee":
-      console.log("addEmployee");
-      break;
-    case "Update employee's Role":
-      console.log("updateEmployeeRole");
-      break;
-    case "Update employee's Manager":
-      console.log("updateEmployeeManager");
-      break;
-    case "Delete departments, roles, and employees":
-      console.log("deleteElements");
-      break;
-    default:
-      console.log("Invalid choice. Please try again.");
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "What would you like to do?",
+        name: "choice",
+        choices: [
+          "1 - View All Employees",
+          "2 - Add an Employee",
+          "3 - Update employee's Role",
+          "4 - View All Roles",
+          "5 - Add a Role",
+          "6 - View All Department",
+          "7 - Add a Department",
+          "8 - Quit",
+        ],
+        pageSize: 8,
+        validate: (answer) => {
+          if (answer.length === 0) {
+            return console.log("Select one!");
+          }
+          return true;
+        },
+      },
+    ])
+    .then((userInput) => {
+      switch (parseInt(userInput.choice[0])) {
+        case 1:
+          viewAllEmployees();
+          break;
+        case 2:
+          console.log("2 - Add an Employee");
+          break;
+        case 3:
+          console.log("3 - Update employee's Role");
+          break;
+        case 4:
+          console.log("4 - View All Roles");
+          break;
+        case 5:
+          console.log("5 - Add a Role");
+          break;
+        case 6:
+          console.log("6 - View All Department");
+          break;
+        case 7:
+          console.log("7 - Add a Department");
+          break;
+        case 8:
+          console.clear();
+          console.log("see you soon!");
+          break;
+        default:
+          console.log("Invalid choice. Please try again.");
+      }
+    });
+};
+// table maker
+const tableMaker = (data) => {
+  const t = new Transform({
+    transform(chunk, enc, cb) {
+      cb(null, chunk);
+    },
+  });
+  const logger = new Console({ stdout: t });
+  logger.table(data);
+  const table = (t.read() || "").toString();
+  let result = "";
+  for (let row of table.split(/[\r\n]+/)) {
+    let r = row.replace(/[^┬]*┬/, "┌");
+    r = r.replace(/^├─*┼/, "├");
+    r = r.replace(/│[^│]*/, "");
+    r = r.replace(/^└─*┴/, "└");
+    r = r.replace(/'/g, " ");
+    result += `${r}\n`;
   }
+  console.log(result);
 };
 
+menu();
 init();
+
+// View All Employees
+const viewAllEmployees = () => {
+  console.clear();
+  // headerPrinter("allEmp");
+
+  db.query(
+    "select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(em.first_name, ' ', em.last_name) as manager from employee e join role r on e.role_id= r.id join department d on r.department_id=d.id join employee em on e.manager_id= em.id;",
+    function (err, res) {
+      if (err) throw err;
+
+      tableMaker(res);
+      init();
+    }
+  );
+};
