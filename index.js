@@ -33,6 +33,13 @@ const menu = (choice) => {
                         ╩ ╩ ╩═╝╩═╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝
   `);
   }
+  if (choice === "allRole") {
+    console.log(`
+                  ╦═╗╔═╗╦  ╔═╗╔═╗
+                  ╠╦╝║ ║║  ║╣ ╚═╗
+                  ╩╚═╚═╝╩═╝╚═╝╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -72,7 +79,7 @@ const init = () => {
           console.log("3 - Update employee's Role");
           break;
         case 4:
-          console.log("4 - View All Roles");
+          viewAllRoles();
           break;
         case 5:
           console.log("5 - Add a Role");
@@ -133,3 +140,20 @@ const viewAllEmployees = () => {
     }
   );
 };
+
+/// All roles
+
+function viewAllRoles() {
+  console.clear();
+  menu("main");
+  menu("allRole");
+  db.query(
+    "select r.id, r.title, d.name as department, r.salary FROM role r join department d on r.department_id = d.id;",
+    function (err, res) {
+      if (err) throw err;
+
+      tableMaker(res);
+      init();
+    }
+  );
+}
