@@ -40,6 +40,13 @@ const menu = (choice) => {
                   ╩╚═╚═╝╩═╝╚═╝╚═╝
   `);
   }
+  if (choice === "allDep") {
+    console.log(`
+ ╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
+ ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ ╚═╗
+ ╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -85,7 +92,7 @@ const init = () => {
           console.log("5 - Add a Role");
           break;
         case 6:
-          console.log("6 - View All Department");
+          viewAllDepartments();
           break;
         case 7:
           console.log("7 - Add a Department");
@@ -141,8 +148,7 @@ const viewAllEmployees = () => {
   );
 };
 
-/// All roles
-
+// View All Roles
 function viewAllRoles() {
   console.clear();
   menu("main");
@@ -156,4 +162,17 @@ function viewAllRoles() {
       init();
     }
   );
+}
+
+// View All Departments
+function viewAllDepartments() {
+  console.clear();
+  menu("main");
+  menu("allDep");
+  db.query("select id, name from department;", function (err, res) {
+    if (err) throw err;
+
+    tableMaker(res);
+    init();
+  });
 }
