@@ -75,6 +75,13 @@ const menu = (choice) => {
   ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝  ╩╚═╚═╝╩═╝╚═╝                                          
   `);
   }
+  if (choice === "updateManager") {
+    console.log(`
+  ╦ ╦╔═╗╔╦╗╔═╗╔╦╗╔═╗  ╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗╦═╗
+  ║ ║╠═╝ ║║╠═╣ ║ ║╣   ║║║╠═╣║║║╠═╣║ ╦║╣ ╠╦╝
+  ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩╚═                 
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -91,7 +98,9 @@ const init = () => {
           "5 - Add a Role",
           "6 - View All Department",
           "7 - Add a Department",
-          "8 - Quit",
+          "8 - Update employee managers",
+          "9 - View employees by manager",
+          "10 - Quit",
         ],
         pageSize: 8,
         validate: (answer) => {
@@ -126,6 +135,12 @@ const init = () => {
           addDepartment();
           break;
         case 8:
+          updateEmployeeManager();
+          break;
+        case 9:
+          addDepartment();
+          break;
+        case 10:
           console.clear();
           console.log("see you soon!");
           break;
@@ -364,8 +379,7 @@ const addEmployee = async () => {
     });
 };
 
-/// Update employee
-
+// Update employee
 const updateEmployeeRole = async () => {
   console.clear();
   menu("updateEmpRole");
@@ -403,6 +417,50 @@ const updateEmployeeRole = async () => {
     .then(function (answer) {
       db.query(
         `update employee set role_id = ${answer.roleId} where id = ${answer.employeeID}; `,
+        function (err, res) {
+          if (err) throw err;
+          viewAllEmployees();
+        }
+      );
+    });
+};
+
+// Update employee`s manager
+const updateEmployeeManager = async () => {
+  console.clear();
+  menu("updateManager");
+
+  const employee = await db.query("select * from employee;");
+  const employees = employee.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+  const manager = await db.query("select * from employee;");
+  const mChoices = manager.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Please Select the employee wish to update its manager?",
+        name: "employeeID",
+        choices: employees,
+        pageSize: 15,
+      },
+      {
+        type: "list",
+        message: "Please select the new employee manager?",
+        name: "managerId",
+        choices: mChoices,
+        pageSize: 15,
+      },
+    ])
+    .then(function (answer) {
+      db.query(
+        `update employee SET manager_id = ${answer.managerId} where id = ${answer.employeeID}; `,
         function (err, res) {
           if (err) throw err;
           viewAllEmployees();
