@@ -1,10 +1,9 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql2");
+require("dotenv").config();
 const util = require("util");
 const { Console } = require("console");
 const { Transform } = require("stream");
-const { async } = require("rxjs");
-require("dotenv").config();
 
 // database  connection
 const db = mysql.createConnection({
@@ -15,6 +14,23 @@ const db = mysql.createConnection({
 });
 db.query = util.promisify(db.query);
 
+const happyQuotes = () => {
+  // https://rapidapi.com/
+  fetch(`https://famous-quotes4.p.rapidapi.com/random?category=all&count=1`, {
+    method: "GET",
+    headers: {
+      "X-RapidAPI-Key": "6acb6ba7c6msh7d357ffeacd9241p121517jsn038e9ab1c651",
+      "X-RapidAPI-Host": "famous-quotes4.p.rapidapi.com",
+    },
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("\x1b[33m Have a wonderful time!\n \x1b[0m");
+      console.log("\x1b[32m" + data[0].text + "\n \x1b[0m");
+      console.log("By: " + data[0].author);
+    })
+    .catch((err) => console.error(err));
+};
 // main menu
 const menu = (choice) => {
   if (choice === "main") {
@@ -171,7 +187,8 @@ const init = () => {
           break;
         case 12:
           console.clear();
-          console.log("see you soon!");
+          // console.log("see you soon!");
+          happyQuotes();
           break;
         default:
           console.log("Invalid choice. Please try again.");
@@ -208,12 +225,10 @@ const viewAllEmployees = () => {
   console.clear();
   menu("main");
   menu("allEmp");
-
   db.query(
     "select e.id, e.first_name, e.last_name, r.title, d.name as department, r.salary, concat(em.first_name, ' ', em.last_name) as manager from employee e join role r on e.role_id= r.id join department d on r.department_id=d.id join employee em on e.manager_id= em.id;",
     function (err, res) {
       if (err) throw err;
-
       tableMaker(res);
       init();
     }
@@ -229,7 +244,6 @@ const viewAllRoles = () => {
     "select r.id, r.title, d.name as department, r.salary FROM role r join department d on r.department_id = d.id;",
     function (err, res) {
       if (err) throw err;
-
       tableMaker(res);
       init();
     }
@@ -243,7 +257,6 @@ const viewAllDepartments = () => {
   menu("allDep");
   db.query("select id, name from department;", function (err, res) {
     if (err) throw err;
-
     tableMaker(res);
     init();
   });
@@ -254,7 +267,6 @@ const addDepartment = () => {
   console.clear();
   db.query("select id, name from department;", function (err, res) {
     if (err) throw err;
-
     menu("addDep");
     tableMaker(res);
 
@@ -285,11 +297,10 @@ const addDepartment = () => {
   });
 };
 
-// Add role
+// Add a role
 const addRole = async () => {
   console.clear();
   menu("addRole");
-
   const departments = await db.query("select * from department;");
   const choices = departments.map(({ id, name }) => ({
     name: name,
@@ -339,18 +350,16 @@ const addRole = async () => {
     });
 };
 
-// Add employee
+// Add an employee
 const addEmployee = async () => {
   console.clear();
   menu("addEmp");
-
   const roles = await db.query("select * from role;");
   const choices = roles.map(({ id, title }) => ({
     name: title,
     value: id,
   }));
   roles.unshift({ name: "None", value: null });
-
   const manager = await db.query("select * from employee;");
   const mChoices = manager.map(({ id, first_name, last_name }) => ({
     name: `${first_name} ${last_name}`,
@@ -412,14 +421,12 @@ const addEmployee = async () => {
 const updateEmployeeRole = async () => {
   console.clear();
   menu("updateEmpRole");
-
   const roles = await db.query("select * from role;");
   const rChoices = roles.map(({ id, title }) => ({
     name: title,
     value: id,
   }));
   roles.unshift({ name: "None", value: null });
-
   const employee = await db.query("select * from employee;");
   const eChoice = employee.map(({ id, first_name, last_name }) => ({
     name: `${first_name} ${last_name}`,
@@ -458,7 +465,6 @@ const updateEmployeeRole = async () => {
 const updateEmployeeManager = async () => {
   console.clear();
   menu("updateManager");
-
   const employee = await db.query("select * from employee;");
   const employees = employee.map(({ id, first_name, last_name }) => ({
     name: `${first_name} ${last_name}`,
@@ -507,7 +513,6 @@ const viewEmpViaManagers = () => {
     function (err, res) {
       if (err) throw err;
       menu("viewAllEmpMan");
-
       tableMaker(res);
       init();
     }
@@ -538,7 +543,6 @@ const annualBudget = () => {
     function (err, res) {
       if (err) throw err;
       menu("annual");
-
       tableMaker(res);
       init();
     }
