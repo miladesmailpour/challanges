@@ -47,6 +47,13 @@ const menu = (choice) => {
  ╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
   `);
   }
+  if (choice === "addDep") {
+    console.log(`
+ ╔═╗╔╦╗╔╦╗  ╔╦╗╔═╗╔═╗╔═╗╦═╗╔╦╗╔╦╗╔═╗╔╗╔╔╦╗╔═╗
+ ╠═╣ ║║ ║║   ║║║╣ ╠═╝╠═╣╠╦╝ ║ ║║║║╣ ║║║ ║ ╚═╗
+ ╩ ╩═╩╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ ╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -95,7 +102,7 @@ const init = () => {
           viewAllDepartments();
           break;
         case 7:
-          console.log("7 - Add a Department");
+          addDepartment();
           break;
         case 8:
           console.clear();
@@ -149,7 +156,7 @@ const viewAllEmployees = () => {
 };
 
 // View All Roles
-function viewAllRoles() {
+const viewAllRoles = () => {
   console.clear();
   menu("main");
   menu("allRole");
@@ -162,10 +169,10 @@ function viewAllRoles() {
       init();
     }
   );
-}
+};
 
 // View All Departments
-function viewAllDepartments() {
+const viewAllDepartments = () => {
   console.clear();
   menu("main");
   menu("allDep");
@@ -175,4 +182,42 @@ function viewAllDepartments() {
     tableMaker(res);
     init();
   });
-}
+};
+
+// Add a Department
+
+const addDepartment = () => {
+  console.clear();
+  db.query("SELECT id, name FROM department;", function (err, res) {
+    if (err) throw err;
+
+    menu("addDep");
+
+    tableMaker(res);
+
+    inquirer
+      .prompt([
+        {
+          type: "input",
+          message: "Please enter the name of department?",
+          name: "newDep",
+          validate: function (answer) {
+            if (answer.length === 0) {
+              return console.log("name is require for adding a Department!");
+            }
+            return true;
+          },
+          pageSize: 13,
+        },
+      ])
+      .then(function (answer) {
+        db.query(
+          `INSERT INTO department (name) VALUES ("${answer.newDep}");`,
+          function (err, res) {
+            if (err) throw err;
+            viewAllDepartments();
+          }
+        );
+      });
+  });
+};
