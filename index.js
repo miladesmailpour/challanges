@@ -82,6 +82,13 @@ const menu = (choice) => {
   ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩╚═                 
   `);
   }
+  if (choice === "viewAllEmpMan") {
+    console.log(`
+  ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗╔═╗  ╔═╗╔╗╔╔╦╗  ╔╦╗╔═╗╔╗╔╔═╗╔═╗╔═╗╦═╗╔═╗
+  ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ ╚═╗  ╠═╣║║║ ║║  ║║║╠═╣║║║╠═╣║ ╦║╣ ╠╦╝╚═╗
+  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝  ╩ ╩╝╚╝═╩╝  ╩ ╩╩ ╩╝╚╝╩ ╩╚═╝╚═╝╩╚═╚═╝
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -138,7 +145,7 @@ const init = () => {
           updateEmployeeManager();
           break;
         case 9:
-          addDepartment();
+          viewEmpViaManagers();
           break;
         case 10:
           console.clear();
@@ -379,7 +386,7 @@ const addEmployee = async () => {
     });
 };
 
-// Update employee
+// Update employee role
 const updateEmployeeRole = async () => {
   console.clear();
   menu("updateEmpRole");
@@ -425,7 +432,7 @@ const updateEmployeeRole = async () => {
     });
 };
 
-// Update employee`s manager
+// Update employee manager
 const updateEmployeeManager = async () => {
   console.clear();
   menu("updateManager");
@@ -468,3 +475,19 @@ const updateEmployeeManager = async () => {
       );
     });
 };
+
+// View employees by manager
+function viewEmpViaManagers() {
+  console.clear();
+  menu("main");
+  db.query(
+    "select em.id, concat(em.first_name, ' ', em.last_name) as manager, concat(e.first_name, ' ', e.last_name) as employee from employee e join employee em ON e.manager_id = em.id;",
+    function (err, res) {
+      if (err) throw err;
+      menu("viewAllEmpMan");
+
+      tableMaker(res);
+      init();
+    }
+  );
+}
