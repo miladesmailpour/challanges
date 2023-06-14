@@ -63,10 +63,16 @@ const menu = (choice) => {
   }
   if (choice === "addEmp") {
     console.log(`
-
   ╔═╗╔╦╗╔╦╗  ╔═╗╔╦╗╔═╗╦  ╔═╗╦ ╦╔═╗╔═╗
   ╠═╣ ║║ ║║  ║╣ ║║║╠═╝║  ║ ║╚╦╝║╣ ║╣ 
   ╩ ╩═╩╝═╩╝  ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝
+  `);
+  }
+  if (choice === "updateEmpRole") {
+    console.log(`
+  ╦ ╦╔═╗╔╦╗╔═╗╔╦╗╔═╗  ╦═╗╔═╗╦  ╔═╗
+  ║ ║╠═╝ ║║╠═╣ ║ ║╣   ╠╦╝║ ║║  ║╣ 
+  ╚═╝╩  ═╩╝╩ ╩ ╩ ╚═╝  ╩╚═╚═╝╩═╝╚═╝                                          
   `);
   }
 };
@@ -105,7 +111,7 @@ const init = () => {
           addEmployee();
           break;
         case 3:
-          console.log("3 - Update employee's Role");
+          updateEmployeeRole();
           break;
         case 4:
           viewAllRoles();
@@ -350,6 +356,53 @@ const addEmployee = async () => {
     .then(function (answer) {
       db.query(
         `insert into employee (first_name, last_name, role_id, manager_id) values ("${answer.firstName}","${answer.lastName}",${answer.role}, ${answer.manager});`,
+        function (err, res) {
+          if (err) throw err;
+          viewAllEmployees();
+        }
+      );
+    });
+};
+
+/// Update employee
+
+const updateEmployeeRole = async () => {
+  console.clear();
+  menu("updateEmpRole");
+
+  const roles = await db.query("select * from role;");
+  const rChoices = roles.map(({ id, title }) => ({
+    name: title,
+    value: id,
+  }));
+  roles.unshift({ name: "None", value: null });
+
+  const employee = await db.query("select * from employee;");
+  const eChoice = employee.map(({ id, first_name, last_name }) => ({
+    name: `${first_name} ${last_name}`,
+    value: id,
+  }));
+
+  inquirer
+    .prompt([
+      {
+        type: "list",
+        message: "Please select the employee wish to update its role?",
+        name: "employeeID",
+        choices: eChoice,
+        pageSize: 15,
+      },
+      {
+        type: "list",
+        message: "Please select the new employee`s role?",
+        name: "roleId",
+        choices: rChoices,
+        pageSize: 15,
+      },
+    ])
+    .then(function (answer) {
+      db.query(
+        `update employee set role_id = ${answer.roleId} where id = ${answer.employeeID}; `,
         function (err, res) {
           if (err) throw err;
           viewAllEmployees();
