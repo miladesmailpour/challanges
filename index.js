@@ -96,6 +96,13 @@ const menu = (choice) => {
   ╚═╝╩ ╩╩  ╩═╝╚═╝ ╩ ╚═╝╚═╝╚═╝  ╩ ╩╝╚╝═╩╝  ═╩╝╚═╝╩  ╩ ╩╩╚═ ╩ ╩ ╩╚═╝╝╚╝ ╩ 
   `);
   }
+  if (choice === "annual") {
+    console.log(`
+    ╔═╗╔╗╔╔╗╔╦ ╦╔═╗╦    ╔╗ ╦ ╦╔╦╗╔═╗╔═╗╔╦╗
+    ╠═╣║║║║║║║ ║╠═╣║    ╠╩╗║ ║ ║║║ ╦║╣  ║ 
+    ╩ ╩╝╚╝╝╚╝╚═╝╩ ╩╩═╝  ╚═╝╚═╝═╩╝╚═╝╚═╝ ╩ 
+  `);
+  }
 };
 const init = () => {
   inquirer
@@ -115,7 +122,8 @@ const init = () => {
           "8 - Update employee managers",
           "9 - View employees by manager",
           "10 - View employees by department",
-          "11 - Quit",
+          "11 - View the total utilized budget of the departments",
+          "12 - Quit",
         ],
         pageSize: 15,
         validate: (answer) => {
@@ -159,6 +167,9 @@ const init = () => {
           viewEmpViaDepartments();
           break;
         case 11:
+          annualBudget();
+          break;
+        case 12:
           console.clear();
           console.log("see you soon!");
           break;
@@ -488,7 +499,7 @@ const updateEmployeeManager = async () => {
 };
 
 // View employees by manager
-function viewEmpViaManagers() {
+const viewEmpViaManagers = () => {
   console.clear();
   menu("main");
   db.query(
@@ -501,10 +512,10 @@ function viewEmpViaManagers() {
       init();
     }
   );
-}
+};
 
 // View employees by department
-function viewEmpViaDepartments() {
+const viewEmpViaDepartments = () => {
   console.clear();
   menu("main");
   db.query(
@@ -516,4 +527,20 @@ function viewEmpViaDepartments() {
       init();
     }
   );
-}
+};
+
+/// View annual budget by department
+const annualBudget = () => {
+  console.clear();
+  menu("main");
+  db.query(
+    "select d.name, sum(r.salary) as budget from department d join role r on d.id = r.department_id group by d.name;",
+    function (err, res) {
+      if (err) throw err;
+      menu("annual");
+
+      tableMaker(res);
+      init();
+    }
+  );
+};
