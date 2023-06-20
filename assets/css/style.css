@@ -143,13 +143,13 @@ section div p {
 }
 
 .w1 {
-    background-image: url("../images/guess-song.png");
+    background-image: url("../images/coter.png");
     background-repeat: no-repeat;
     background-size: 100% 100%;
 }
 
 .w2 {
-    background-image: url("../images/coming-soon.png");
+    background-image: url("../images/guess-song.png");
     background-repeat: no-repeat;
     background-size: 80% 100%;
 }
